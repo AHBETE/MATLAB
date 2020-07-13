@@ -1,0 +1,291 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>e2p1</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-11-25"><meta name="DC.source" content="e2p1.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Problem 1(i)</a></li><li><a href="#3">Problem 1(ii)</a></li><li><a href="#5">Problem 1(iii)</a></li></ul></div><h2 id="1">Problem 1(i)</h2><p>Four eigen energies and wavefunctions.</p><pre class="codeinput">clc
+clear
+
+V0=-320E6;
+dx=0.02;
+a=2;
+b=1;
+
+[Enew1]=secant_d_well_solve(0.09*V0,0.11*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+<span class="comment">% use help ... for detail</span>
+subplot(2,1,1);grid <span class="string">on</span>;subplot(2,1,2);grid <span class="string">on</span>;
+
+[Enew2]=secant_d_well_solve(0.14*V0,0.16*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid <span class="string">on</span>;subplot(2,1,2);grid <span class="string">on</span>;
+
+[Enew3]=secant_d_well_solve(0.59*V0,0.61*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid <span class="string">on</span>;subplot(2,1,2);grid <span class="string">on</span>;
+
+[Enew4]=secant_d_well_solve(0.89*V0,0.91*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid <span class="string">on</span>;subplot(2,1,2);grid <span class="string">on</span>;
+
+<span class="comment">%To make estimation bit easier, I made some plots first...</span>
+<span class="comment">% for i=1:20</span>
+<span class="comment">%     plotwave(0.05*i*V0, V0,-5*a,5*a,0.9*a,a,b,dx)</span>
+<span class="comment">% end</span>
+</pre><pre class="codeoutput">Eigenvalue = -46.505643 (MeV), (fraction E/V0 = 0.145330), iter = 8.000000 
+Eigenvalue = -62.554912 (MeV), (fraction E/V0 = 0.195484), iter = 84.000000 
+Eigenvalue = -196.657610 (MeV), (fraction E/V0 = 0.614555), iter = 28.000000 
+Eigenvalue = -287.392460 (MeV), (fraction E/V0 = 0.898101), iter = 11.000000 
+</pre><img vspace="5" hspace="5" src="e2p1_01.png" alt=""> <img vspace="5" hspace="5" src="e2p1_02.png" alt=""> <img vspace="5" hspace="5" src="e2p1_03.png" alt=""> <img vspace="5" hspace="5" src="e2p1_04.png" alt=""> <p>Since secant method sometime does not converge to the solution quickly, I add one more condition to break the loop, that is abs(E1-E2)&lt;Tol. That might explain why my energy is not exact. However, I tried using bisection method 'near' the result of my secant method, but it still does not find the solution within 500 iterations.</p><h2 id="3">Problem 1(ii)</h2><p>Effect on ground level energy of changing well depth.</p><pre class="codeinput">clc
+clear
+dx=0.02;
+a=2;
+b=1;
+
+V0=-160E6;
+[Enew(1)]=secant_d_well_solve(0.81*V0,0.825*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid <span class="string">on</span>;subplot(2,1,2);grid <span class="string">on</span>;
+
+V0=-240E6;
+[Enew(2)]=secant_d_well_solve(0.85*V0,0.87*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid <span class="string">on</span>;subplot(2,1,2);grid <span class="string">on</span>;
+
+V0=-320E6;
+[Enew(3)]=secant_d_well_solve(0.89*V0,0.91*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid <span class="string">on</span>;subplot(2,1,2);grid <span class="string">on</span>;
+
+V0=-360E6;
+[Enew(4)]=secant_d_well_solve(0.89*V0,0.91*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid <span class="string">on</span>;subplot(2,1,2);grid <span class="string">on</span>;
+
+V0=-400E6;
+[Enew(5)]=secant_d_well_solve(0.9*V0,0.917*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid <span class="string">on</span>;subplot(2,1,2);grid <span class="string">on</span>;
+
+figure()
+plot([-160E6,-240E6,-320E6,-360E6,-400E6],Enew,<span class="string">'-o'</span>);grid <span class="string">on</span>;
+title(<span class="string">'Effect of changing depth'</span>);
+xlabel(<span class="string">'Depth of well (eV)'</span>);ylabel(<span class="string">'Ground state energy level (eV)'</span>);
+
+<span class="comment">%plotwave(0.915*V0, V0,-5*a,5*a,0.9*a,a,b,dx)</span>
+</pre><pre class="codeoutput">Eigenvalue = -131.376776 (MeV), (fraction E/V0 = 0.821105), iter = 21.000000 
+Eigenvalue = -209.288321 (MeV), (fraction E/V0 = 0.872035), iter = 11.000000 
+Eigenvalue = -287.392460 (MeV), (fraction E/V0 = 0.898101), iter = 11.000000 
+Eigenvalue = -326.732116 (MeV), (fraction E/V0 = 0.907589), iter = 10.000000 
+Eigenvalue = -366.016236 (MeV), (fraction E/V0 = 0.915041), iter = 9.000000 
+</pre><img vspace="5" hspace="5" src="e2p1_05.png" alt=""> <img vspace="5" hspace="5" src="e2p1_06.png" alt=""> <img vspace="5" hspace="5" src="e2p1_07.png" alt=""> <img vspace="5" hspace="5" src="e2p1_08.png" alt=""> <img vspace="5" hspace="5" src="e2p1_09.png" alt=""> <img vspace="5" hspace="5" src="e2p1_10.png" alt=""> <p>As the well gets deep, the groud state energy also decreases. And their relationship is pretty linear based on the plot.</p><h2 id="5">Problem 1(iii)</h2><p>Effect on ground level energy of changing well width.</p><pre class="codeinput">clc
+clear
+dx=0.02;
+a=2;
+V0=-320E6;
+
+b=0.8;
+[Enew(1)]=secant_d_well_solve(0.89*V0,0.91*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid <span class="string">on</span>;subplot(2,1,2);grid <span class="string">on</span>;
+
+b=0.6;
+[Enew(2)]=secant_d_well_solve(0.89*V0,0.91*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid <span class="string">on</span>;subplot(2,1,2);grid <span class="string">on</span>;
+
+b=0.4;
+[Enew(3)]=secant_d_well_solve(0.9*V0,0.91*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid <span class="string">on</span>;subplot(2,1,2);grid <span class="string">on</span>;
+
+b=0.2;
+[Enew(4)]=secant_d_well_solve(0.92*V0,0.93*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid <span class="string">on</span>;subplot(2,1,2);grid <span class="string">on</span>;
+
+b=0.1;
+[Enew(5)]=secant_d_well_solve(0.93*V0,0.94*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid <span class="string">on</span>;subplot(2,1,2);grid <span class="string">on</span>;
+
+figure()
+plot([0.8,0.6,0.4,0.2,0.1],Enew,<span class="string">'-o'</span>);grid <span class="string">on</span>;
+title(<span class="string">'Effect of changing width'</span>);
+xlabel(<span class="string">'Width of seperation (fm)'</span>);ylabel(<span class="string">'Ground state energy level (eV)'</span>);
+
+<span class="comment">%  plotwave(0.94*V0, V0,-5*a,5*a,0.9*a,a,b,dx)</span>
+</pre><pre class="codeoutput">Eigenvalue = -288.286149 (MeV), (fraction E/V0 = 0.900894), iter = 9.000000 
+Eigenvalue = -289.038229 (MeV), (fraction E/V0 = 0.903244), iter = 14.000000 
+Eigenvalue = -291.365914 (MeV), (fraction E/V0 = 0.910518), iter = 11.000000 
+Eigenvalue = -295.721773 (MeV), (fraction E/V0 = 0.924131), iter = 28.000000 
+Eigenvalue = -300.389544 (MeV), (fraction E/V0 = 0.938717), iter = 11.000000 
+</pre><img vspace="5" hspace="5" src="e2p1_11.png" alt=""> <img vspace="5" hspace="5" src="e2p1_12.png" alt=""> <img vspace="5" hspace="5" src="e2p1_13.png" alt=""> <img vspace="5" hspace="5" src="e2p1_14.png" alt=""> <img vspace="5" hspace="5" src="e2p1_15.png" alt=""> <img vspace="5" hspace="5" src="e2p1_16.png" alt=""> <p>As the width of seperation gets smaller, the groud state energy decrease. And as the width approaches to zero, the rate of change in energy also increases.</p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Problem 1(i)
+% Four eigen energies and wavefunctions.
+
+clc
+clear
+
+V0=-320E6;
+dx=0.02;
+a=2;
+b=1;
+
+[Enew1]=secant_d_well_solve(0.09*V0,0.11*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+% use help ... for detail
+subplot(2,1,1);grid on;subplot(2,1,2);grid on;
+
+[Enew2]=secant_d_well_solve(0.14*V0,0.16*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid on;subplot(2,1,2);grid on;
+
+[Enew3]=secant_d_well_solve(0.59*V0,0.61*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid on;subplot(2,1,2);grid on;
+
+[Enew4]=secant_d_well_solve(0.89*V0,0.91*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid on;subplot(2,1,2);grid on;
+
+%To make estimation bit easier, I made some plots first...
+% for i=1:20
+%     plotwave(0.05*i*V0, V0,-5*a,5*a,0.9*a,a,b,dx)
+% end
+
+%%
+% Since secant method sometime does not converge to the solution quickly, I
+% add one more condition to break the loop, that is abs(E1-E2)<Tol. That
+% might explain why my energy is not exact. However, I tried using
+% bisection method 'near' the result of my secant method, but it still does
+% not find the solution within 500 iterations.
+
+%% Problem 1(ii)
+% Effect on ground level energy of changing well depth.
+
+clc
+clear
+dx=0.02;
+a=2;
+b=1;
+
+V0=-160E6;
+[Enew(1)]=secant_d_well_solve(0.81*V0,0.825*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid on;subplot(2,1,2);grid on;
+
+V0=-240E6;
+[Enew(2)]=secant_d_well_solve(0.85*V0,0.87*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid on;subplot(2,1,2);grid on;
+
+V0=-320E6;
+[Enew(3)]=secant_d_well_solve(0.89*V0,0.91*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid on;subplot(2,1,2);grid on;
+
+V0=-360E6;
+[Enew(4)]=secant_d_well_solve(0.89*V0,0.91*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid on;subplot(2,1,2);grid on;
+
+V0=-400E6;
+[Enew(5)]=secant_d_well_solve(0.9*V0,0.917*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid on;subplot(2,1,2);grid on;
+
+figure()
+plot([-160E6,-240E6,-320E6,-360E6,-400E6],Enew,'-o');grid on;
+title('Effect of changing depth');
+xlabel('Depth of well (eV)');ylabel('Ground state energy level (eV)');
+
+%plotwave(0.915*V0, V0,-5*a,5*a,0.9*a,a,b,dx)
+
+%%
+% As the well gets deep, the groud state energy also decreases. And their
+% relationship is pretty linear based on the plot.
+
+%% Problem 1(iii)
+% Effect on ground level energy of changing well width.
+
+clc
+clear
+dx=0.02;
+a=2;
+V0=-320E6;
+
+b=0.8;
+[Enew(1)]=secant_d_well_solve(0.89*V0,0.91*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid on;subplot(2,1,2);grid on;
+
+b=0.6;
+[Enew(2)]=secant_d_well_solve(0.89*V0,0.91*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid on;subplot(2,1,2);grid on;
+
+b=0.4;
+[Enew(3)]=secant_d_well_solve(0.9*V0,0.91*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid on;subplot(2,1,2);grid on;
+
+b=0.2;
+[Enew(4)]=secant_d_well_solve(0.92*V0,0.93*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid on;subplot(2,1,2);grid on;
+
+b=0.1;
+[Enew(5)]=secant_d_well_solve(0.93*V0,0.94*V0,V0,-5*a,5*a,0.9*a,a,b,dx);
+subplot(2,1,1);grid on;subplot(2,1,2);grid on;
+
+figure()
+plot([0.8,0.6,0.4,0.2,0.1],Enew,'-o');grid on;
+title('Effect of changing width');
+xlabel('Width of seperation (fm)');ylabel('Ground state energy level (eV)');
+
+%  plotwave(0.94*V0, V0,-5*a,5*a,0.9*a,a,b,dx)
+
+%%
+% As the width of seperation gets smaller, the groud state energy decrease.
+% And as the width approaches to zero, the rate of change in energy also
+% increases.
+##### SOURCE END #####
+--></body></html>

@@ -1,0 +1,900 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>problem1_ab</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-09-17"><meta name="DC.source" content="problem1_ab.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">%%problem 1ab</span>
+<span class="comment">%Zibo Wang 2019</span>
+
+clear
+close <span class="string">all</span>
+clc
+
+<span class="comment">%diff</span>
+<span class="keyword">for</span> l=[1,2]<span class="comment">%fuction to be diffed</span>
+    <span class="keyword">if</span> l==1
+        j=<span class="string">"exp"</span>;
+    <span class="keyword">elseif</span> l==2
+        j=<span class="string">"sin"</span>;
+    <span class="keyword">end</span>
+    <span class="keyword">for</span> m=[1,2,3]<span class="comment">%x-value at which derivative to be evaled</span>
+        <span class="keyword">if</span> m==1
+            i=0.1;
+        <span class="keyword">elseif</span> m==2
+            i=1;
+        <span class="keyword">elseif</span> m==3
+            i=100;
+        <span class="keyword">end</span>
+        <span class="keyword">for</span> n=[1,2]<span class="comment">%methoed used</span>
+            <span class="keyword">if</span> n==1
+                k=<span class="string">"forward method"</span>;
+            <span class="keyword">elseif</span> n==2
+                k=<span class="string">"center difference"</span>;
+            <span class="keyword">end</span>
+            fprintf(<span class="string">'\n\nFor %s(%d) using %s:\n'</span>,j,i,k)
+            h=1;
+            nitr=1;
+            real_diff=exp(i);
+            <span class="keyword">while</span> h&gt;=eps
+                ss(nitr)=h;
+                calc_diff=diff_(j,i,h,n);<span class="comment">%for help, use command "help diff_"; diff_.m is in the same zip file</span>
+                error=abs(calc_diff-real_diff)/real_diff;
+                fprintf(<span class="string">'iteration# = %d ,h = %e, calculated derivative = %e, relative error = %e;\n'</span>,nitr,h,calc_diff,error)
+                nitr=nitr+1;
+                h=h/2;
+                eval([<span class="string">'re'</span>,num2str(l),num2str(m),num2str(n),<span class="string">'('</span>,num2str(nitr),<span class="string">')'</span>,<span class="string">'='</span>,<span class="string">'error'</span>,<span class="string">';'</span>]);<span class="comment">%save error</span>
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">%print stepsize vs error</span>
+cnt=1;
+<span class="keyword">for</span> l=[1,2]
+    <span class="keyword">for</span> m=[1,2,3]
+        <span class="keyword">for</span> n=[1,2]
+
+            figure(cnt)
+            eval([<span class="string">'loglog(ss,re'</span>,num2str(l),num2str(m),num2str(n),<span class="string">'(1:end-1));'</span>])
+
+            <span class="keyword">if</span> l==1
+                j=<span class="string">"exp"</span>;
+            <span class="keyword">elseif</span> l==2
+                j=<span class="string">"sin"</span>;
+            <span class="keyword">end</span>
+            <span class="keyword">if</span> m==1
+                i=0.1;
+            <span class="keyword">elseif</span> m==2
+                i=1;
+            <span class="keyword">elseif</span> m==3
+                i=100;
+            <span class="keyword">end</span>
+            <span class="keyword">if</span> n==1
+                k=<span class="string">"forward method"</span>;
+            <span class="keyword">elseif</span> n==2
+                k=<span class="string">"center difference"</span>;
+            <span class="keyword">end</span>
+
+            title(num2str(cnt)+<span class="string">") "</span>+j+<span class="string">"("</span>+num2str(i)+<span class="string">") using "</span>+k+<span class="string">";"</span>)
+            xlabel(<span class="string">"log(h)"</span>);ylabel(<span class="string">"log(\epsilon)"</span>);grid;
+            cnt=cnt+1;
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">
+
+For exp(1.000000e-01) using forward method:
+iteration# = 1 ,h = 1.000000e+00, calculated derivative = 1.898995e+00, relative error = 7.182818e-01;
+iteration# = 2 ,h = 5.000000e-01, calculated derivative = 1.433896e+00, relative error = 2.974425e-01;
+iteration# = 3 ,h = 2.500000e-01, calculated derivative = 1.255587e+00, relative error = 1.361017e-01;
+iteration# = 4 ,h = 1.250000e-01, calculated derivative = 1.177214e+00, relative error = 6.518762e-02;
+iteration# = 5 ,h = 6.250000e-02, calculated derivative = 1.140438e+00, relative error = 3.191134e-02;
+iteration# = 6 ,h = 3.125000e-02, calculated derivative = 1.122621e+00, relative error = 1.578904e-02;
+iteration# = 7 ,h = 1.562500e-02, calculated derivative = 1.113850e+00, relative error = 7.853350e-03;
+iteration# = 8 ,h = 7.812500e-03, calculated derivative = 1.109499e+00, relative error = 3.916442e-03;
+iteration# = 9 ,h = 3.906250e-03, calculated derivative = 1.107332e+00, relative error = 1.955671e-03;
+iteration# = 10 ,h = 1.953125e-03, calculated derivative = 1.106251e+00, relative error = 9.771986e-04;
+iteration# = 11 ,h = 9.765625e-04, calculated derivative = 1.105711e+00, relative error = 4.884402e-04;
+iteration# = 12 ,h = 4.882813e-04, calculated derivative = 1.105441e+00, relative error = 2.441804e-04;
+iteration# = 13 ,h = 2.441406e-04, calculated derivative = 1.105306e+00, relative error = 1.220802e-04;
+iteration# = 14 ,h = 1.220703e-04, calculated derivative = 1.105238e+00, relative error = 6.103764e-05;
+iteration# = 15 ,h = 6.103516e-05, calculated derivative = 1.105205e+00, relative error = 3.051820e-05;
+iteration# = 16 ,h = 3.051758e-05, calculated derivative = 1.105188e+00, relative error = 1.525894e-05;
+iteration# = 17 ,h = 1.525879e-05, calculated derivative = 1.105179e+00, relative error = 7.629423e-06;
+iteration# = 18 ,h = 7.629395e-06, calculated derivative = 1.105175e+00, relative error = 3.814698e-06;
+iteration# = 19 ,h = 3.814697e-06, calculated derivative = 1.105173e+00, relative error = 1.907310e-06;
+iteration# = 20 ,h = 1.907349e-06, calculated derivative = 1.105172e+00, relative error = 9.535889e-07;
+iteration# = 21 ,h = 9.536743e-07, calculated derivative = 1.105171e+00, relative error = 4.768339e-07;
+iteration# = 22 ,h = 4.768372e-07, calculated derivative = 1.105171e+00, relative error = 2.381404e-07;
+iteration# = 23 ,h = 2.384186e-07, calculated derivative = 1.105171e+00, relative error = 1.184777e-07;
+iteration# = 24 ,h = 1.192093e-07, calculated derivative = 1.105171e+00, relative error = 5.948899e-08;
+iteration# = 25 ,h = 5.960464e-08, calculated derivative = 1.105171e+00, relative error = 2.915196e-08;
+iteration# = 26 ,h = 2.980232e-08, calculated derivative = 1.105171e+00, relative error = 1.566883e-08;
+iteration# = 27 ,h = 1.490116e-08, calculated derivative = 1.105171e+00, relative error = 2.185699e-09;
+iteration# = 28 ,h = 7.450581e-09, calculated derivative = 1.105171e+00, relative error = 1.129743e-08;
+iteration# = 29 ,h = 3.725290e-09, calculated derivative = 1.105171e+00, relative error = 1.129743e-08;
+iteration# = 30 ,h = 1.862645e-09, calculated derivative = 1.105171e+00, relative error = 6.522994e-08;
+iteration# = 31 ,h = 9.313226e-10, calculated derivative = 1.105171e+00, relative error = 1.730950e-07;
+iteration# = 32 ,h = 4.656613e-10, calculated derivative = 1.105171e+00, relative error = 1.730950e-07;
+iteration# = 33 ,h = 2.328306e-10, calculated derivative = 1.105170e+00, relative error = 6.045551e-07;
+iteration# = 34 ,h = 1.164153e-10, calculated derivative = 1.105171e+00, relative error = 2.583651e-07;
+iteration# = 35 ,h = 5.820766e-11, calculated derivative = 1.105171e+00, relative error = 2.583651e-07;
+iteration# = 36 ,h = 2.910383e-11, calculated derivative = 1.105171e+00, relative error = 2.583651e-07;
+iteration# = 37 ,h = 1.455192e-11, calculated derivative = 1.105164e+00, relative error = 6.644997e-06;
+iteration# = 38 ,h = 7.275958e-12, calculated derivative = 1.105164e+00, relative error = 6.644997e-06;
+iteration# = 39 ,h = 3.637979e-12, calculated derivative = 1.105164e+00, relative error = 6.644997e-06;
+iteration# = 40 ,h = 1.818989e-12, calculated derivative = 1.105103e+00, relative error = 6.187189e-05;
+iteration# = 41 ,h = 9.094947e-13, calculated derivative = 1.104980e+00, relative error = 1.723257e-04;
+iteration# = 42 ,h = 4.547474e-13, calculated derivative = 1.104980e+00, relative error = 1.723257e-04;
+iteration# = 43 ,h = 2.273737e-13, calculated derivative = 1.104492e+00, relative error = 6.141408e-04;
+iteration# = 44 ,h = 1.136868e-13, calculated derivative = 1.105469e+00, relative error = 2.694895e-04;
+iteration# = 45 ,h = 5.684342e-14, calculated derivative = 1.105469e+00, relative error = 2.694895e-04;
+iteration# = 46 ,h = 2.842171e-14, calculated derivative = 1.101563e+00, relative error = 3.265032e-03;
+iteration# = 47 ,h = 1.421085e-14, calculated derivative = 1.093750e+00, relative error = 1.033407e-02;
+iteration# = 48 ,h = 7.105427e-15, calculated derivative = 1.093750e+00, relative error = 1.033407e-02;
+iteration# = 49 ,h = 3.552714e-15, calculated derivative = 1.062500e+00, relative error = 3.861024e-02;
+iteration# = 50 ,h = 1.776357e-15, calculated derivative = 1.000000e+00, relative error = 9.516258e-02;
+iteration# = 51 ,h = 8.881784e-16, calculated derivative = 1.000000e+00, relative error = 9.516258e-02;
+iteration# = 52 ,h = 4.440892e-16, calculated derivative = 1.000000e+00, relative error = 9.516258e-02;
+iteration# = 53 ,h = 2.220446e-16, calculated derivative = 1.000000e+00, relative error = 9.516258e-02;
+
+
+For exp(1.000000e-01) using center difference:
+iteration# = 1 ,h = 1.000000e+00, calculated derivative = 1.151799e+00, relative error = 4.219061e-02;
+iteration# = 2 ,h = 5.000000e-01, calculated derivative = 1.116719e+00, relative error = 1.044927e-02;
+iteration# = 3 ,h = 2.500000e-01, calculated derivative = 1.108051e+00, relative error = 2.606202e-03;
+iteration# = 4 ,h = 1.250000e-01, calculated derivative = 1.105891e+00, relative error = 6.511688e-04;
+iteration# = 5 ,h = 6.250000e-02, calculated derivative = 1.105351e+00, relative error = 1.627684e-04;
+iteration# = 6 ,h = 3.125000e-02, calculated derivative = 1.105216e+00, relative error = 4.069060e-05;
+iteration# = 7 ,h = 1.562500e-02, calculated derivative = 1.105182e+00, relative error = 1.017256e-05;
+iteration# = 8 ,h = 7.812500e-03, calculated derivative = 1.105174e+00, relative error = 2.543133e-06;
+iteration# = 9 ,h = 3.906250e-03, calculated derivative = 1.105172e+00, relative error = 6.357830e-07;
+iteration# = 10 ,h = 1.953125e-03, calculated derivative = 1.105171e+00, relative error = 1.589458e-07;
+iteration# = 11 ,h = 9.765625e-04, calculated derivative = 1.105171e+00, relative error = 3.973647e-08;
+iteration# = 12 ,h = 4.882813e-04, calculated derivative = 1.105171e+00, relative error = 9.934136e-09;
+iteration# = 13 ,h = 2.441406e-04, calculated derivative = 1.105171e+00, relative error = 2.483605e-09;
+iteration# = 14 ,h = 1.220703e-04, calculated derivative = 1.105171e+00, relative error = 6.204578e-10;
+iteration# = 15 ,h = 6.103516e-05, calculated derivative = 1.105171e+00, relative error = 1.579628e-10;
+iteration# = 16 ,h = 3.051758e-05, calculated derivative = 1.105171e+00, relative error = 3.945876e-11;
+iteration# = 17 ,h = 1.525879e-05, calculated derivative = 1.105171e+00, relative error = 1.312452e-11;
+iteration# = 18 ,h = 7.629395e-06, calculated derivative = 1.105171e+00, relative error = 4.259382e-14;
+iteration# = 19 ,h = 3.814697e-06, calculated derivative = 1.105171e+00, relative error = 2.637683e-11;
+iteration# = 20 ,h = 1.907349e-06, calculated derivative = 1.105171e+00, relative error = 7.896011e-11;
+iteration# = 21 ,h = 9.536743e-07, calculated derivative = 1.105171e+00, relative error = 1.317138e-10;
+iteration# = 22 ,h = 4.768372e-07, calculated derivative = 1.105171e+00, relative error = 3.423876e-10;
+iteration# = 23 ,h = 2.384186e-07, calculated derivative = 1.105171e+00, relative error = 5.003079e-10;
+iteration# = 24 ,h = 1.192093e-07, calculated derivative = 1.105171e+00, relative error = 5.003079e-10;
+iteration# = 25 ,h = 5.960464e-08, calculated derivative = 1.105171e+00, relative error = 2.185699e-09;
+iteration# = 26 ,h = 2.980232e-08, calculated derivative = 1.105171e+00, relative error = 2.185699e-09;
+iteration# = 27 ,h = 1.490116e-08, calculated derivative = 1.105171e+00, relative error = 2.185699e-09;
+iteration# = 28 ,h = 7.450581e-09, calculated derivative = 1.105171e+00, relative error = 1.566883e-08;
+iteration# = 29 ,h = 3.725290e-09, calculated derivative = 1.105171e+00, relative error = 1.129743e-08;
+iteration# = 30 ,h = 1.862645e-09, calculated derivative = 1.105171e+00, relative error = 6.522994e-08;
+iteration# = 31 ,h = 9.313226e-10, calculated derivative = 1.105171e+00, relative error = 4.263508e-08;
+iteration# = 32 ,h = 4.656613e-10, calculated derivative = 1.105171e+00, relative error = 1.730950e-07;
+iteration# = 33 ,h = 2.328306e-10, calculated derivative = 1.105171e+00, relative error = 2.583651e-07;
+iteration# = 34 ,h = 1.164153e-10, calculated derivative = 1.105171e+00, relative error = 2.583651e-07;
+iteration# = 35 ,h = 5.820766e-11, calculated derivative = 1.105171e+00, relative error = 2.583651e-07;
+iteration# = 36 ,h = 2.910383e-11, calculated derivative = 1.105171e+00, relative error = 2.583651e-07;
+iteration# = 37 ,h = 1.455192e-11, calculated derivative = 1.105179e+00, relative error = 7.161727e-06;
+iteration# = 38 ,h = 7.275958e-12, calculated derivative = 1.105194e+00, relative error = 2.096845e-05;
+iteration# = 39 ,h = 3.637979e-12, calculated derivative = 1.105164e+00, relative error = 6.644997e-06;
+iteration# = 40 ,h = 1.818989e-12, calculated derivative = 1.105103e+00, relative error = 6.187189e-05;
+iteration# = 41 ,h = 9.094947e-13, calculated derivative = 1.105225e+00, relative error = 4.858190e-05;
+iteration# = 42 ,h = 4.547474e-13, calculated derivative = 1.104980e+00, relative error = 1.723257e-04;
+iteration# = 43 ,h = 2.273737e-13, calculated derivative = 1.105469e+00, relative error = 2.694895e-04;
+iteration# = 44 ,h = 1.136868e-13, calculated derivative = 1.105469e+00, relative error = 2.694895e-04;
+iteration# = 45 ,h = 5.684342e-14, calculated derivative = 1.105469e+00, relative error = 2.694895e-04;
+iteration# = 46 ,h = 2.842171e-14, calculated derivative = 1.101563e+00, relative error = 3.265032e-03;
+iteration# = 47 ,h = 1.421085e-14, calculated derivative = 1.109375e+00, relative error = 3.804011e-03;
+iteration# = 48 ,h = 7.105427e-15, calculated derivative = 1.093750e+00, relative error = 1.033407e-02;
+iteration# = 49 ,h = 3.552714e-15, calculated derivative = 1.062500e+00, relative error = 3.861024e-02;
+iteration# = 50 ,h = 1.776357e-15, calculated derivative = 1.125000e+00, relative error = 1.794210e-02;
+iteration# = 51 ,h = 8.881784e-16, calculated derivative = 1.250000e+00, relative error = 1.310468e-01;
+iteration# = 52 ,h = 4.440892e-16, calculated derivative = 1.500000e+00, relative error = 3.572561e-01;
+iteration# = 53 ,h = 2.220446e-16, calculated derivative = 1.000000e+00, relative error = 9.516258e-02;
+
+
+For exp(1) using forward method:
+iteration# = 1 ,h = 1.000000e+00, calculated derivative = 4.670774e+00, relative error = 7.182818e-01;
+iteration# = 2 ,h = 5.000000e-01, calculated derivative = 3.526814e+00, relative error = 2.974425e-01;
+iteration# = 3 ,h = 2.500000e-01, calculated derivative = 3.088245e+00, relative error = 1.361017e-01;
+iteration# = 4 ,h = 1.250000e-01, calculated derivative = 2.895480e+00, relative error = 6.518762e-02;
+iteration# = 5 ,h = 6.250000e-02, calculated derivative = 2.805026e+00, relative error = 3.191134e-02;
+iteration# = 6 ,h = 3.125000e-02, calculated derivative = 2.761201e+00, relative error = 1.578904e-02;
+iteration# = 7 ,h = 1.562500e-02, calculated derivative = 2.739629e+00, relative error = 7.853350e-03;
+iteration# = 8 ,h = 7.812500e-03, calculated derivative = 2.728928e+00, relative error = 3.916442e-03;
+iteration# = 9 ,h = 3.906250e-03, calculated derivative = 2.723598e+00, relative error = 1.955671e-03;
+iteration# = 10 ,h = 1.953125e-03, calculated derivative = 2.720938e+00, relative error = 9.771986e-04;
+iteration# = 11 ,h = 9.765625e-04, calculated derivative = 2.719610e+00, relative error = 4.884402e-04;
+iteration# = 12 ,h = 4.882813e-04, calculated derivative = 2.718946e+00, relative error = 2.441804e-04;
+iteration# = 13 ,h = 2.441406e-04, calculated derivative = 2.718614e+00, relative error = 1.220802e-04;
+iteration# = 14 ,h = 1.220703e-04, calculated derivative = 2.718448e+00, relative error = 6.103764e-05;
+iteration# = 15 ,h = 6.103516e-05, calculated derivative = 2.718365e+00, relative error = 3.051820e-05;
+iteration# = 16 ,h = 3.051758e-05, calculated derivative = 2.718323e+00, relative error = 1.525894e-05;
+iteration# = 17 ,h = 1.525879e-05, calculated derivative = 2.718303e+00, relative error = 7.629420e-06;
+iteration# = 18 ,h = 7.629395e-06, calculated derivative = 2.718292e+00, relative error = 3.814687e-06;
+iteration# = 19 ,h = 3.814697e-06, calculated derivative = 2.718287e+00, relative error = 1.907331e-06;
+iteration# = 20 ,h = 1.907349e-06, calculated derivative = 2.718284e+00, relative error = 9.536208e-07;
+iteration# = 21 ,h = 9.536743e-07, calculated derivative = 2.718283e+00, relative error = 4.767015e-07;
+iteration# = 22 ,h = 4.768372e-07, calculated derivative = 2.718282e+00, relative error = 2.382419e-07;
+iteration# = 23 ,h = 2.384186e-07, calculated derivative = 2.718282e+00, relative error = 1.190120e-07;
+iteration# = 24 ,h = 1.192093e-07, calculated derivative = 2.718282e+00, relative error = 5.871189e-08;
+iteration# = 25 ,h = 5.960464e-08, calculated derivative = 2.718282e+00, relative error = 2.719136e-08;
+iteration# = 26 ,h = 2.980232e-08, calculated derivative = 2.718282e+00, relative error = 1.348679e-08;
+iteration# = 27 ,h = 1.490116e-08, calculated derivative = 2.718282e+00, relative error = 2.523125e-09;
+iteration# = 28 ,h = 7.450581e-09, calculated derivative = 2.718282e+00, relative error = 8.440536e-09;
+iteration# = 29 ,h = 3.725290e-09, calculated derivative = 2.718282e+00, relative error = 3.036786e-08;
+iteration# = 30 ,h = 1.862645e-09, calculated derivative = 2.718282e+00, relative error = 3.036786e-08;
+iteration# = 31 ,h = 9.313226e-10, calculated derivative = 2.718282e+00, relative error = 3.036786e-08;
+iteration# = 32 ,h = 4.656613e-10, calculated derivative = 2.718281e+00, relative error = 3.812050e-07;
+iteration# = 33 ,h = 2.328306e-10, calculated derivative = 2.718281e+00, relative error = 3.812050e-07;
+iteration# = 34 ,h = 1.164153e-10, calculated derivative = 2.718277e+00, relative error = 1.784554e-06;
+iteration# = 35 ,h = 5.820766e-11, calculated derivative = 2.718277e+00, relative error = 1.784554e-06;
+iteration# = 36 ,h = 2.910383e-11, calculated derivative = 2.718277e+00, relative error = 1.784554e-06;
+iteration# = 37 ,h = 1.455192e-11, calculated derivative = 2.718262e+00, relative error = 7.397949e-06;
+iteration# = 38 ,h = 7.275958e-12, calculated derivative = 2.718262e+00, relative error = 7.397949e-06;
+iteration# = 39 ,h = 3.637979e-12, calculated derivative = 2.718262e+00, relative error = 7.397949e-06;
+iteration# = 40 ,h = 1.818989e-12, calculated derivative = 2.718262e+00, relative error = 7.397949e-06;
+iteration# = 41 ,h = 9.094947e-13, calculated derivative = 2.717773e+00, relative error = 1.870266e-04;
+iteration# = 42 ,h = 4.547474e-13, calculated derivative = 2.717773e+00, relative error = 1.870266e-04;
+iteration# = 43 ,h = 2.273737e-13, calculated derivative = 2.716797e+00, relative error = 5.462838e-04;
+iteration# = 44 ,h = 1.136868e-13, calculated derivative = 2.714844e+00, relative error = 1.264798e-03;
+iteration# = 45 ,h = 5.684342e-14, calculated derivative = 2.710938e+00, relative error = 2.701827e-03;
+iteration# = 46 ,h = 2.842171e-14, calculated derivative = 2.703125e+00, relative error = 5.575886e-03;
+iteration# = 47 ,h = 1.421085e-14, calculated derivative = 2.687500e+00, relative error = 1.132400e-02;
+iteration# = 48 ,h = 7.105427e-15, calculated derivative = 2.687500e+00, relative error = 1.132400e-02;
+iteration# = 49 ,h = 3.552714e-15, calculated derivative = 2.625000e+00, relative error = 3.431647e-02;
+iteration# = 50 ,h = 1.776357e-15, calculated derivative = 2.500000e+00, relative error = 8.030140e-02;
+iteration# = 51 ,h = 8.881784e-16, calculated derivative = 2.500000e+00, relative error = 8.030140e-02;
+iteration# = 52 ,h = 4.440892e-16, calculated derivative = 2.000000e+00, relative error = 2.642411e-01;
+iteration# = 53 ,h = 2.220446e-16, calculated derivative = 2.000000e+00, relative error = 2.642411e-01;
+
+
+For exp(1) using center difference:
+iteration# = 1 ,h = 1.000000e+00, calculated derivative = 2.832968e+00, relative error = 4.219061e-02;
+iteration# = 2 ,h = 5.000000e-01, calculated derivative = 2.746686e+00, relative error = 1.044927e-02;
+iteration# = 3 ,h = 2.500000e-01, calculated derivative = 2.725366e+00, relative error = 2.606202e-03;
+iteration# = 4 ,h = 1.250000e-01, calculated derivative = 2.720052e+00, relative error = 6.511688e-04;
+iteration# = 5 ,h = 6.250000e-02, calculated derivative = 2.718724e+00, relative error = 1.627684e-04;
+iteration# = 6 ,h = 3.125000e-02, calculated derivative = 2.718392e+00, relative error = 4.069060e-05;
+iteration# = 7 ,h = 1.562500e-02, calculated derivative = 2.718309e+00, relative error = 1.017256e-05;
+iteration# = 8 ,h = 7.812500e-03, calculated derivative = 2.718289e+00, relative error = 2.543133e-06;
+iteration# = 9 ,h = 3.906250e-03, calculated derivative = 2.718284e+00, relative error = 6.357830e-07;
+iteration# = 10 ,h = 1.953125e-03, calculated derivative = 2.718282e+00, relative error = 1.589457e-07;
+iteration# = 11 ,h = 9.765625e-04, calculated derivative = 2.718282e+00, relative error = 3.973627e-08;
+iteration# = 12 ,h = 4.882813e-04, calculated derivative = 2.718282e+00, relative error = 9.934170e-09;
+iteration# = 13 ,h = 2.441406e-04, calculated derivative = 2.718282e+00, relative error = 2.483645e-09;
+iteration# = 14 ,h = 1.220703e-04, calculated derivative = 2.718282e+00, relative error = 6.213477e-10;
+iteration# = 15 ,h = 6.103516e-05, calculated derivative = 2.718282e+00, relative error = 1.542679e-10;
+iteration# = 16 ,h = 3.051758e-05, calculated derivative = 2.718282e+00, relative error = 3.381753e-11;
+iteration# = 17 ,h = 1.525879e-05, calculated derivative = 2.718282e+00, relative error = 7.050778e-12;
+iteration# = 18 ,h = 7.629395e-06, calculated derivative = 2.718282e+00, relative error = 1.775748e-11;
+iteration# = 19 ,h = 3.814697e-06, calculated derivative = 2.718282e+00, relative error = 3.655923e-12;
+iteration# = 20 ,h = 1.907349e-06, calculated derivative = 2.718282e+00, relative error = 4.648273e-11;
+iteration# = 21 ,h = 9.536743e-07, calculated derivative = 2.718282e+00, relative error = 4.648273e-11;
+iteration# = 22 ,h = 4.768372e-07, calculated derivative = 2.718282e+00, relative error = 1.248245e-10;
+iteration# = 23 ,h = 2.384186e-07, calculated derivative = 2.718282e+00, relative error = 2.177899e-10;
+iteration# = 24 ,h = 1.192093e-07, calculated derivative = 2.718282e+00, relative error = 2.177899e-10;
+iteration# = 25 ,h = 5.960464e-08, calculated derivative = 2.718282e+00, relative error = 2.523125e-09;
+iteration# = 26 ,h = 2.980232e-08, calculated derivative = 2.718282e+00, relative error = 2.523125e-09;
+iteration# = 27 ,h = 1.490116e-08, calculated derivative = 2.718282e+00, relative error = 2.523125e-09;
+iteration# = 28 ,h = 7.450581e-09, calculated derivative = 2.718282e+00, relative error = 8.440536e-09;
+iteration# = 29 ,h = 3.725290e-09, calculated derivative = 2.718282e+00, relative error = 1.348679e-08;
+iteration# = 30 ,h = 1.862645e-09, calculated derivative = 2.718282e+00, relative error = 5.734143e-08;
+iteration# = 31 ,h = 9.313226e-10, calculated derivative = 2.718282e+00, relative error = 3.036786e-08;
+iteration# = 32 ,h = 4.656613e-10, calculated derivative = 2.718282e+00, relative error = 3.036786e-08;
+iteration# = 33 ,h = 2.328306e-10, calculated derivative = 2.718281e+00, relative error = 3.812050e-07;
+iteration# = 34 ,h = 1.164153e-10, calculated derivative = 2.718281e+00, relative error = 3.812050e-07;
+iteration# = 35 ,h = 5.820766e-11, calculated derivative = 2.718285e+00, relative error = 1.022144e-06;
+iteration# = 36 ,h = 2.910383e-11, calculated derivative = 2.718277e+00, relative error = 1.784554e-06;
+iteration# = 37 ,h = 1.455192e-11, calculated derivative = 2.718292e+00, relative error = 3.828841e-06;
+iteration# = 38 ,h = 7.275958e-12, calculated derivative = 2.718323e+00, relative error = 1.505563e-05;
+iteration# = 39 ,h = 3.637979e-12, calculated derivative = 2.718384e+00, relative error = 3.750921e-05;
+iteration# = 40 ,h = 1.818989e-12, calculated derivative = 2.718262e+00, relative error = 7.397949e-06;
+iteration# = 41 ,h = 9.094947e-13, calculated derivative = 2.718262e+00, relative error = 7.397949e-06;
+iteration# = 42 ,h = 4.547474e-13, calculated derivative = 2.717773e+00, relative error = 1.870266e-04;
+iteration# = 43 ,h = 2.273737e-13, calculated derivative = 2.716797e+00, relative error = 5.462838e-04;
+iteration# = 44 ,h = 1.136868e-13, calculated derivative = 2.714844e+00, relative error = 1.264798e-03;
+iteration# = 45 ,h = 5.684342e-14, calculated derivative = 2.710938e+00, relative error = 2.701827e-03;
+iteration# = 46 ,h = 2.842171e-14, calculated derivative = 2.718750e+00, relative error = 1.722307e-04;
+iteration# = 47 ,h = 1.421085e-14, calculated derivative = 2.718750e+00, relative error = 1.722307e-04;
+iteration# = 48 ,h = 7.105427e-15, calculated derivative = 2.687500e+00, relative error = 1.132400e-02;
+iteration# = 49 ,h = 3.552714e-15, calculated derivative = 2.750000e+00, relative error = 1.166846e-02;
+iteration# = 50 ,h = 1.776357e-15, calculated derivative = 2.750000e+00, relative error = 1.166846e-02;
+iteration# = 51 ,h = 8.881784e-16, calculated derivative = 2.500000e+00, relative error = 8.030140e-02;
+iteration# = 52 ,h = 4.440892e-16, calculated derivative = 3.000000e+00, relative error = 1.036383e-01;
+iteration# = 53 ,h = 2.220446e-16, calculated derivative = 2.000000e+00, relative error = 2.642411e-01;
+
+
+For exp(100) using forward method:
+iteration# = 1 ,h = 1.000000e+00, calculated derivative = 4.618943e+43, relative error = 7.182818e-01;
+iteration# = 2 ,h = 5.000000e-01, calculated derivative = 3.487678e+43, relative error = 2.974425e-01;
+iteration# = 3 ,h = 2.500000e-01, calculated derivative = 3.053974e+43, relative error = 1.361017e-01;
+iteration# = 4 ,h = 1.250000e-01, calculated derivative = 2.863349e+43, relative error = 6.518762e-02;
+iteration# = 5 ,h = 6.250000e-02, calculated derivative = 2.773899e+43, relative error = 3.191134e-02;
+iteration# = 6 ,h = 3.125000e-02, calculated derivative = 2.730560e+43, relative error = 1.578904e-02;
+iteration# = 7 ,h = 1.562500e-02, calculated derivative = 2.709228e+43, relative error = 7.853350e-03;
+iteration# = 8 ,h = 7.812500e-03, calculated derivative = 2.698645e+43, relative error = 3.916442e-03;
+iteration# = 9 ,h = 3.906250e-03, calculated derivative = 2.693374e+43, relative error = 1.955671e-03;
+iteration# = 10 ,h = 1.953125e-03, calculated derivative = 2.690744e+43, relative error = 9.771986e-04;
+iteration# = 11 ,h = 9.765625e-04, calculated derivative = 2.689430e+43, relative error = 4.884402e-04;
+iteration# = 12 ,h = 4.882813e-04, calculated derivative = 2.688774e+43, relative error = 2.441804e-04;
+iteration# = 13 ,h = 2.441406e-04, calculated derivative = 2.688445e+43, relative error = 1.220802e-04;
+iteration# = 14 ,h = 1.220703e-04, calculated derivative = 2.688281e+43, relative error = 6.103764e-05;
+iteration# = 15 ,h = 6.103516e-05, calculated derivative = 2.688199e+43, relative error = 3.051820e-05;
+iteration# = 16 ,h = 3.051758e-05, calculated derivative = 2.688158e+43, relative error = 1.525894e-05;
+iteration# = 17 ,h = 1.525879e-05, calculated derivative = 2.688138e+43, relative error = 7.629426e-06;
+iteration# = 18 ,h = 7.629395e-06, calculated derivative = 2.688127e+43, relative error = 3.814700e-06;
+iteration# = 19 ,h = 3.814697e-06, calculated derivative = 2.688122e+43, relative error = 1.907343e-06;
+iteration# = 20 ,h = 1.907349e-06, calculated derivative = 2.688120e+43, relative error = 9.536288e-07;
+iteration# = 21 ,h = 9.536743e-07, calculated derivative = 2.688118e+43, relative error = 4.768198e-07;
+iteration# = 22 ,h = 4.768372e-07, calculated derivative = 2.688118e+43, relative error = 2.384635e-07;
+iteration# = 23 ,h = 2.384186e-07, calculated derivative = 2.688117e+43, relative error = 1.187060e-07;
+iteration# = 24 ,h = 1.192093e-07, calculated derivative = 2.688117e+43, relative error = 5.998612e-08;
+iteration# = 25 ,h = 5.960464e-08, calculated derivative = 2.688117e+43, relative error = 2.753568e-08;
+iteration# = 26 ,h = 2.980232e-08, calculated derivative = 2.688117e+43, relative error = 1.517361e-08;
+iteration# = 27 ,h = 1.490116e-08, calculated derivative = 2.688117e+43, relative error = 2.811536e-09;
+iteration# = 28 ,h = 7.450581e-09, calculated derivative = 2.688117e+43, relative error = 9.550537e-09;
+iteration# = 29 ,h = 3.725290e-09, calculated derivative = 2.688117e+43, relative error = 3.427468e-08;
+iteration# = 30 ,h = 1.862645e-09, calculated derivative = 2.688117e+43, relative error = 1.517361e-08;
+iteration# = 31 ,h = 9.313226e-10, calculated derivative = 2.688117e+43, relative error = 8.372297e-08;
+iteration# = 32 ,h = 4.656613e-10, calculated derivative = 2.688117e+43, relative error = 8.372297e-08;
+iteration# = 33 ,h = 2.328306e-10, calculated derivative = 2.688116e+43, relative error = 4.793093e-07;
+iteration# = 34 ,h = 1.164153e-10, calculated derivative = 2.688116e+43, relative error = 4.793093e-07;
+iteration# = 35 ,h = 5.820766e-11, calculated derivative = 2.688112e+43, relative error = 2.061655e-06;
+iteration# = 36 ,h = 2.910383e-11, calculated derivative = 2.688112e+43, relative error = 2.061655e-06;
+iteration# = 37 ,h = 1.455192e-11, calculated derivative = 2.688095e+43, relative error = 8.391036e-06;
+iteration# = 38 ,h = 7.275958e-12, calculated derivative = 2.688095e+43, relative error = 8.391036e-06;
+iteration# = 39 ,h = 3.637979e-12, calculated derivative = 2.688095e+43, relative error = 8.391036e-06;
+iteration# = 40 ,h = 1.818989e-12, calculated derivative = 2.687958e+43, relative error = 5.902609e-05;
+iteration# = 41 ,h = 9.094947e-13, calculated derivative = 2.687958e+43, relative error = 5.902609e-05;
+iteration# = 42 ,h = 4.547474e-13, calculated derivative = 2.687414e+43, relative error = 2.615663e-04;
+iteration# = 43 ,h = 2.273737e-13, calculated derivative = 2.687414e+43, relative error = 2.615663e-04;
+iteration# = 44 ,h = 1.136868e-13, calculated derivative = 2.687414e+43, relative error = 2.615663e-04;
+iteration# = 45 ,h = 5.684342e-14, calculated derivative = 2.683058e+43, relative error = 1.881888e-03;
+iteration# = 46 ,h = 2.842171e-14, calculated derivative = 2.683058e+43, relative error = 1.881888e-03;
+iteration# = 47 ,h = 1.421085e-14, calculated derivative = 2.683058e+43, relative error = 1.881888e-03;
+iteration# = 48 ,h = 7.105427e-15, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+iteration# = 49 ,h = 3.552714e-15, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+iteration# = 50 ,h = 1.776357e-15, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+iteration# = 51 ,h = 8.881784e-16, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+iteration# = 52 ,h = 4.440892e-16, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+iteration# = 53 ,h = 2.220446e-16, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+
+
+For exp(100) using center difference:
+iteration# = 1 ,h = 1.000000e+00, calculated derivative = 2.801530e+43, relative error = 4.219061e-02;
+iteration# = 2 ,h = 5.000000e-01, calculated derivative = 2.716206e+43, relative error = 1.044927e-02;
+iteration# = 3 ,h = 2.500000e-01, calculated derivative = 2.695123e+43, relative error = 2.606202e-03;
+iteration# = 4 ,h = 1.250000e-01, calculated derivative = 2.689868e+43, relative error = 6.511688e-04;
+iteration# = 5 ,h = 6.250000e-02, calculated derivative = 2.688555e+43, relative error = 1.627684e-04;
+iteration# = 6 ,h = 3.125000e-02, calculated derivative = 2.688227e+43, relative error = 4.069060e-05;
+iteration# = 7 ,h = 1.562500e-02, calculated derivative = 2.688144e+43, relative error = 1.017256e-05;
+iteration# = 8 ,h = 7.812500e-03, calculated derivative = 2.688124e+43, relative error = 2.543133e-06;
+iteration# = 9 ,h = 3.906250e-03, calculated derivative = 2.688119e+43, relative error = 6.357830e-07;
+iteration# = 10 ,h = 1.953125e-03, calculated derivative = 2.688118e+43, relative error = 1.589457e-07;
+iteration# = 11 ,h = 9.765625e-04, calculated derivative = 2.688117e+43, relative error = 3.973648e-08;
+iteration# = 12 ,h = 4.882813e-04, calculated derivative = 2.688117e+43, relative error = 9.934215e-09;
+iteration# = 13 ,h = 2.441406e-04, calculated derivative = 2.688117e+43, relative error = 2.483319e-09;
+iteration# = 14 ,h = 1.220703e-04, calculated derivative = 2.688117e+43, relative error = 6.219160e-10;
+iteration# = 15 ,h = 6.103516e-05, calculated derivative = 2.688117e+43, relative error = 1.556220e-10;
+iteration# = 16 ,h = 3.051758e-05, calculated derivative = 2.688117e+43, relative error = 3.489862e-11;
+iteration# = 17 ,h = 1.525879e-05, calculated derivative = 2.688117e+43, relative error = 1.075395e-11;
+iteration# = 18 ,h = 7.629395e-06, calculated derivative = 2.688117e+43, relative error = 1.075395e-11;
+iteration# = 19 ,h = 3.814697e-06, calculated derivative = 2.688117e+43, relative error = 1.075395e-11;
+iteration# = 20 ,h = 1.907349e-06, calculated derivative = 2.688117e+43, relative error = 1.075395e-11;
+iteration# = 21 ,h = 9.536743e-07, calculated derivative = 2.688117e+43, relative error = 1.073326e-10;
+iteration# = 22 ,h = 4.768372e-07, calculated derivative = 2.688117e+43, relative error = 2.789821e-10;
+iteration# = 23 ,h = 2.384186e-07, calculated derivative = 2.688117e+43, relative error = 4.936474e-10;
+iteration# = 24 ,h = 1.192093e-07, calculated derivative = 2.688117e+43, relative error = 2.789821e-10;
+iteration# = 25 ,h = 5.960464e-08, calculated derivative = 2.688117e+43, relative error = 2.789821e-10;
+iteration# = 26 ,h = 2.980232e-08, calculated derivative = 2.688117e+43, relative error = 2.811536e-09;
+iteration# = 27 ,h = 1.490116e-08, calculated derivative = 2.688117e+43, relative error = 9.550537e-09;
+iteration# = 28 ,h = 7.450581e-09, calculated derivative = 2.688117e+43, relative error = 9.550537e-09;
+iteration# = 29 ,h = 3.725290e-09, calculated derivative = 2.688117e+43, relative error = 1.517361e-08;
+iteration# = 30 ,h = 1.862645e-09, calculated derivative = 2.688117e+43, relative error = 1.517361e-08;
+iteration# = 31 ,h = 9.313226e-10, calculated derivative = 2.688117e+43, relative error = 8.372297e-08;
+iteration# = 32 ,h = 4.656613e-10, calculated derivative = 2.688117e+43, relative error = 8.372297e-08;
+iteration# = 33 ,h = 2.328306e-10, calculated derivative = 2.688118e+43, relative error = 3.118634e-07;
+iteration# = 34 ,h = 1.164153e-10, calculated derivative = 2.688116e+43, relative error = 4.793093e-07;
+iteration# = 35 ,h = 5.820766e-11, calculated derivative = 2.688120e+43, relative error = 1.103036e-06;
+iteration# = 36 ,h = 2.910383e-11, calculated derivative = 2.688112e+43, relative error = 2.061655e-06;
+iteration# = 37 ,h = 1.455192e-11, calculated derivative = 2.688129e+43, relative error = 4.267727e-06;
+iteration# = 38 ,h = 7.275958e-12, calculated derivative = 2.688095e+43, relative error = 8.391036e-06;
+iteration# = 39 ,h = 3.637979e-12, calculated derivative = 2.688095e+43, relative error = 8.391036e-06;
+iteration# = 40 ,h = 1.818989e-12, calculated derivative = 2.688231e+43, relative error = 4.224401e-05;
+iteration# = 41 ,h = 9.094947e-13, calculated derivative = 2.687958e+43, relative error = 5.902609e-05;
+iteration# = 42 ,h = 4.547474e-13, calculated derivative = 2.688503e+43, relative error = 1.435141e-04;
+iteration# = 43 ,h = 2.273737e-13, calculated derivative = 2.687414e+43, relative error = 2.615663e-04;
+iteration# = 44 ,h = 1.136868e-13, calculated derivative = 2.687414e+43, relative error = 2.615663e-04;
+iteration# = 45 ,h = 5.684342e-14, calculated derivative = 2.691770e+43, relative error = 1.358755e-03;
+iteration# = 46 ,h = 2.842171e-14, calculated derivative = 2.683058e+43, relative error = 1.881888e-03;
+iteration# = 47 ,h = 1.421085e-14, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+iteration# = 48 ,h = 7.105427e-15, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+iteration# = 49 ,h = 3.552714e-15, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+iteration# = 50 ,h = 1.776357e-15, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+iteration# = 51 ,h = 8.881784e-16, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+iteration# = 52 ,h = 4.440892e-16, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+iteration# = 53 ,h = 2.220446e-16, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+
+
+For sin(1.000000e-01) using forward method:
+iteration# = 1 ,h = 1.000000e+00, calculated derivative = 7.913739e-01, relative error = 2.839352e-01;
+iteration# = 2 ,h = 5.000000e-01, calculated derivative = 9.296181e-01, relative error = 1.588467e-01;
+iteration# = 3 ,h = 2.500000e-01, calculated derivative = 9.722576e-01, relative error = 1.202650e-01;
+iteration# = 4 ,h = 1.250000e-01, calculated derivative = 9.861836e-01, relative error = 1.076642e-01;
+iteration# = 5 ,h = 6.250000e-02, calculated derivative = 9.912377e-01, relative error = 1.030910e-01;
+iteration# = 6 ,h = 3.125000e-02, calculated derivative = 9.932825e-01, relative error = 1.012409e-01;
+iteration# = 7 ,h = 1.562500e-02, calculated derivative = 9.941837e-01, relative error = 1.004253e-01;
+iteration# = 8 ,h = 7.812500e-03, calculated derivative = 9.946041e-01, relative error = 1.000450e-01;
+iteration# = 9 ,h = 3.906250e-03, calculated derivative = 9.948066e-01, relative error = 9.986172e-02;
+iteration# = 10 ,h = 1.953125e-03, calculated derivative = 9.949060e-01, relative error = 9.977179e-02;
+iteration# = 11 ,h = 9.765625e-04, calculated derivative = 9.949553e-01, relative error = 9.972725e-02;
+iteration# = 12 ,h = 4.882813e-04, calculated derivative = 9.949798e-01, relative error = 9.970509e-02;
+iteration# = 13 ,h = 2.441406e-04, calculated derivative = 9.949920e-01, relative error = 9.969404e-02;
+iteration# = 14 ,h = 1.220703e-04, calculated derivative = 9.949981e-01, relative error = 9.968852e-02;
+iteration# = 15 ,h = 6.103516e-05, calculated derivative = 9.950011e-01, relative error = 9.968576e-02;
+iteration# = 16 ,h = 3.051758e-05, calculated derivative = 9.950026e-01, relative error = 9.968438e-02;
+iteration# = 17 ,h = 1.525879e-05, calculated derivative = 9.950034e-01, relative error = 9.968369e-02;
+iteration# = 18 ,h = 7.629395e-06, calculated derivative = 9.950038e-01, relative error = 9.968334e-02;
+iteration# = 19 ,h = 3.814697e-06, calculated derivative = 9.950040e-01, relative error = 9.968317e-02;
+iteration# = 20 ,h = 1.907349e-06, calculated derivative = 9.950041e-01, relative error = 9.968309e-02;
+iteration# = 21 ,h = 9.536743e-07, calculated derivative = 9.950041e-01, relative error = 9.968304e-02;
+iteration# = 22 ,h = 4.768372e-07, calculated derivative = 9.950041e-01, relative error = 9.968302e-02;
+iteration# = 23 ,h = 2.384186e-07, calculated derivative = 9.950042e-01, relative error = 9.968301e-02;
+iteration# = 24 ,h = 1.192093e-07, calculated derivative = 9.950042e-01, relative error = 9.968301e-02;
+iteration# = 25 ,h = 5.960464e-08, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 26 ,h = 2.980232e-08, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 27 ,h = 1.490116e-08, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 28 ,h = 7.450581e-09, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 29 ,h = 3.725290e-09, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 30 ,h = 1.862645e-09, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 31 ,h = 9.313226e-10, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 32 ,h = 4.656613e-10, calculated derivative = 9.950042e-01, relative error = 9.968299e-02;
+iteration# = 33 ,h = 2.328306e-10, calculated derivative = 9.950042e-01, relative error = 9.968299e-02;
+iteration# = 34 ,h = 1.164153e-10, calculated derivative = 9.950042e-01, relative error = 9.968299e-02;
+iteration# = 35 ,h = 5.820766e-11, calculated derivative = 9.950042e-01, relative error = 9.968299e-02;
+iteration# = 36 ,h = 2.910383e-11, calculated derivative = 9.950042e-01, relative error = 9.968299e-02;
+iteration# = 37 ,h = 1.455192e-11, calculated derivative = 9.950047e-01, relative error = 9.968256e-02;
+iteration# = 38 ,h = 7.275958e-12, calculated derivative = 9.950047e-01, relative error = 9.968256e-02;
+iteration# = 39 ,h = 3.637979e-12, calculated derivative = 9.950066e-01, relative error = 9.968083e-02;
+iteration# = 40 ,h = 1.818989e-12, calculated derivative = 9.950027e-01, relative error = 9.968428e-02;
+iteration# = 41 ,h = 9.094947e-13, calculated derivative = 9.950104e-01, relative error = 9.967738e-02;
+iteration# = 42 ,h = 4.547474e-13, calculated derivative = 9.950256e-01, relative error = 9.966357e-02;
+iteration# = 43 ,h = 2.273737e-13, calculated derivative = 9.949951e-01, relative error = 9.969119e-02;
+iteration# = 44 ,h = 1.136868e-13, calculated derivative = 9.949951e-01, relative error = 9.969119e-02;
+iteration# = 45 ,h = 5.684342e-14, calculated derivative = 9.951172e-01, relative error = 9.958073e-02;
+iteration# = 46 ,h = 2.842171e-14, calculated derivative = 9.951172e-01, relative error = 9.958073e-02;
+iteration# = 47 ,h = 1.421085e-14, calculated derivative = 9.951172e-01, relative error = 9.958073e-02;
+iteration# = 48 ,h = 7.105427e-15, calculated derivative = 9.960938e-01, relative error = 9.869710e-02;
+iteration# = 49 ,h = 3.552714e-15, calculated derivative = 9.960938e-01, relative error = 9.869710e-02;
+iteration# = 50 ,h = 1.776357e-15, calculated derivative = 1.000000e+00, relative error = 9.516258e-02;
+iteration# = 51 ,h = 8.881784e-16, calculated derivative = 1.000000e+00, relative error = 9.516258e-02;
+iteration# = 52 ,h = 4.440892e-16, calculated derivative = 1.000000e+00, relative error = 9.516258e-02;
+iteration# = 53 ,h = 2.220446e-16, calculated derivative = 1.000000e+00, relative error = 9.516258e-02;
+
+
+For sin(1.000000e-01) using center difference:
+iteration# = 1 ,h = 1.000000e+00, calculated derivative = 9.540608e-01, relative error = 1.367301e-01;
+iteration# = 2 ,h = 5.000000e-01, calculated derivative = 9.846719e-01, relative error = 1.090320e-01;
+iteration# = 3 ,h = 2.500000e-01, calculated derivative = 9.924150e-01, relative error = 1.020257e-01;
+iteration# = 4 ,h = 1.250000e-01, calculated derivative = 9.943565e-01, relative error = 1.002690e-01;
+iteration# = 5 ,h = 6.250000e-02, calculated derivative = 9.948422e-01, relative error = 9.982953e-02;
+iteration# = 6 ,h = 3.125000e-02, calculated derivative = 9.949637e-01, relative error = 9.971963e-02;
+iteration# = 7 ,h = 1.562500e-02, calculated derivative = 9.949940e-01, relative error = 9.969216e-02;
+iteration# = 8 ,h = 7.812500e-03, calculated derivative = 9.950016e-01, relative error = 9.968529e-02;
+iteration# = 9 ,h = 3.906250e-03, calculated derivative = 9.950035e-01, relative error = 9.968357e-02;
+iteration# = 10 ,h = 1.953125e-03, calculated derivative = 9.950040e-01, relative error = 9.968314e-02;
+iteration# = 11 ,h = 9.765625e-04, calculated derivative = 9.950041e-01, relative error = 9.968304e-02;
+iteration# = 12 ,h = 4.882813e-04, calculated derivative = 9.950042e-01, relative error = 9.968301e-02;
+iteration# = 13 ,h = 2.441406e-04, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 14 ,h = 1.220703e-04, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 15 ,h = 6.103516e-05, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 16 ,h = 3.051758e-05, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 17 ,h = 1.525879e-05, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 18 ,h = 7.629395e-06, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 19 ,h = 3.814697e-06, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 20 ,h = 1.907349e-06, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 21 ,h = 9.536743e-07, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 22 ,h = 4.768372e-07, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 23 ,h = 2.384186e-07, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 24 ,h = 1.192093e-07, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 25 ,h = 5.960464e-08, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 26 ,h = 2.980232e-08, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 27 ,h = 1.490116e-08, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 28 ,h = 7.450581e-09, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 29 ,h = 3.725290e-09, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 30 ,h = 1.862645e-09, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 31 ,h = 9.313226e-10, calculated derivative = 9.950042e-01, relative error = 9.968300e-02;
+iteration# = 32 ,h = 4.656613e-10, calculated derivative = 9.950042e-01, relative error = 9.968299e-02;
+iteration# = 33 ,h = 2.328306e-10, calculated derivative = 9.950042e-01, relative error = 9.968299e-02;
+iteration# = 34 ,h = 1.164153e-10, calculated derivative = 9.950042e-01, relative error = 9.968299e-02;
+iteration# = 35 ,h = 5.820766e-11, calculated derivative = 9.950042e-01, relative error = 9.968299e-02;
+iteration# = 36 ,h = 2.910383e-11, calculated derivative = 9.950042e-01, relative error = 9.968299e-02;
+iteration# = 37 ,h = 1.455192e-11, calculated derivative = 9.950047e-01, relative error = 9.968256e-02;
+iteration# = 38 ,h = 7.275958e-12, calculated derivative = 9.950047e-01, relative error = 9.968256e-02;
+iteration# = 39 ,h = 3.637979e-12, calculated derivative = 9.950027e-01, relative error = 9.968428e-02;
+iteration# = 40 ,h = 1.818989e-12, calculated derivative = 9.950027e-01, relative error = 9.968428e-02;
+iteration# = 41 ,h = 9.094947e-13, calculated derivative = 9.950104e-01, relative error = 9.967738e-02;
+iteration# = 42 ,h = 4.547474e-13, calculated derivative = 9.949951e-01, relative error = 9.969119e-02;
+iteration# = 43 ,h = 2.273737e-13, calculated derivative = 9.949951e-01, relative error = 9.969119e-02;
+iteration# = 44 ,h = 1.136868e-13, calculated derivative = 9.949951e-01, relative error = 9.969119e-02;
+iteration# = 45 ,h = 5.684342e-14, calculated derivative = 9.951172e-01, relative error = 9.958073e-02;
+iteration# = 46 ,h = 2.842171e-14, calculated derivative = 9.951172e-01, relative error = 9.958073e-02;
+iteration# = 47 ,h = 1.421085e-14, calculated derivative = 9.951172e-01, relative error = 9.958073e-02;
+iteration# = 48 ,h = 7.105427e-15, calculated derivative = 9.941406e-01, relative error = 1.004644e-01;
+iteration# = 49 ,h = 3.552714e-15, calculated derivative = 9.960938e-01, relative error = 9.869710e-02;
+iteration# = 50 ,h = 1.776357e-15, calculated derivative = 9.921875e-01, relative error = 1.022316e-01;
+iteration# = 51 ,h = 8.881784e-16, calculated derivative = 1.000000e+00, relative error = 9.516258e-02;
+iteration# = 52 ,h = 4.440892e-16, calculated derivative = 1.000000e+00, relative error = 9.516258e-02;
+iteration# = 53 ,h = 2.220446e-16, calculated derivative = 1.000000e+00, relative error = 9.516258e-02;
+
+
+For sin(1) using forward method:
+iteration# = 1 ,h = 1.000000e+00, calculated derivative = 6.782644e-02, relative error = 9.750480e-01;
+iteration# = 2 ,h = 5.000000e-01, calculated derivative = 3.120480e-01, relative error = 8.852040e-01;
+iteration# = 3 ,h = 2.500000e-01, calculated derivative = 4.300545e-01, relative error = 8.417918e-01;
+iteration# = 4 ,h = 1.250000e-01, calculated derivative = 4.863729e-01, relative error = 8.210734e-01;
+iteration# = 5 ,h = 6.250000e-02, calculated derivative = 5.136632e-01, relative error = 8.110339e-01;
+iteration# = 6 ,h = 3.125000e-02, calculated derivative = 5.270675e-01, relative error = 8.061027e-01;
+iteration# = 7 ,h = 1.562500e-02, calculated derivative = 5.337065e-01, relative error = 8.036604e-01;
+iteration# = 8 ,h = 7.812500e-03, calculated derivative = 5.370098e-01, relative error = 8.024451e-01;
+iteration# = 9 ,h = 3.906250e-03, calculated derivative = 5.386574e-01, relative error = 8.018390e-01;
+iteration# = 10 ,h = 1.953125e-03, calculated derivative = 5.394802e-01, relative error = 8.015363e-01;
+iteration# = 11 ,h = 9.765625e-04, calculated derivative = 5.398913e-01, relative error = 8.013851e-01;
+iteration# = 12 ,h = 4.882813e-04, calculated derivative = 5.400968e-01, relative error = 8.013095e-01;
+iteration# = 13 ,h = 2.441406e-04, calculated derivative = 5.401996e-01, relative error = 8.012717e-01;
+iteration# = 14 ,h = 1.220703e-04, calculated derivative = 5.402509e-01, relative error = 8.012528e-01;
+iteration# = 15 ,h = 6.103516e-05, calculated derivative = 5.402766e-01, relative error = 8.012433e-01;
+iteration# = 16 ,h = 3.051758e-05, calculated derivative = 5.402895e-01, relative error = 8.012386e-01;
+iteration# = 17 ,h = 1.525879e-05, calculated derivative = 5.402959e-01, relative error = 8.012363e-01;
+iteration# = 18 ,h = 7.629395e-06, calculated derivative = 5.402991e-01, relative error = 8.012351e-01;
+iteration# = 19 ,h = 3.814697e-06, calculated derivative = 5.403007e-01, relative error = 8.012345e-01;
+iteration# = 20 ,h = 1.907349e-06, calculated derivative = 5.403015e-01, relative error = 8.012342e-01;
+iteration# = 21 ,h = 9.536743e-07, calculated derivative = 5.403019e-01, relative error = 8.012340e-01;
+iteration# = 22 ,h = 4.768372e-07, calculated derivative = 5.403021e-01, relative error = 8.012340e-01;
+iteration# = 23 ,h = 2.384186e-07, calculated derivative = 5.403022e-01, relative error = 8.012339e-01;
+iteration# = 24 ,h = 1.192093e-07, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 25 ,h = 5.960464e-08, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 26 ,h = 2.980232e-08, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 27 ,h = 1.490116e-08, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 28 ,h = 7.450581e-09, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 29 ,h = 3.725290e-09, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 30 ,h = 1.862645e-09, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 31 ,h = 9.313226e-10, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 32 ,h = 4.656613e-10, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 33 ,h = 2.328306e-10, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 34 ,h = 1.164153e-10, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 35 ,h = 5.820766e-11, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 36 ,h = 2.910383e-11, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 37 ,h = 1.455192e-11, calculated derivative = 5.403061e-01, relative error = 8.012325e-01;
+iteration# = 38 ,h = 7.275958e-12, calculated derivative = 5.402985e-01, relative error = 8.012353e-01;
+iteration# = 39 ,h = 3.637979e-12, calculated derivative = 5.403137e-01, relative error = 8.012297e-01;
+iteration# = 40 ,h = 1.818989e-12, calculated derivative = 5.402832e-01, relative error = 8.012409e-01;
+iteration# = 41 ,h = 9.094947e-13, calculated derivative = 5.402832e-01, relative error = 8.012409e-01;
+iteration# = 42 ,h = 4.547474e-13, calculated derivative = 5.402832e-01, relative error = 8.012409e-01;
+iteration# = 43 ,h = 2.273737e-13, calculated derivative = 5.400391e-01, relative error = 8.013307e-01;
+iteration# = 44 ,h = 1.136868e-13, calculated derivative = 5.400391e-01, relative error = 8.013307e-01;
+iteration# = 45 ,h = 5.684342e-14, calculated derivative = 5.410156e-01, relative error = 8.009715e-01;
+iteration# = 46 ,h = 2.842171e-14, calculated derivative = 5.390625e-01, relative error = 8.016900e-01;
+iteration# = 47 ,h = 1.421085e-14, calculated derivative = 5.390625e-01, relative error = 8.016900e-01;
+iteration# = 48 ,h = 7.105427e-15, calculated derivative = 5.312500e-01, relative error = 8.045640e-01;
+iteration# = 49 ,h = 3.552714e-15, calculated derivative = 5.312500e-01, relative error = 8.045640e-01;
+iteration# = 50 ,h = 1.776357e-15, calculated derivative = 5.625000e-01, relative error = 7.930678e-01;
+iteration# = 51 ,h = 8.881784e-16, calculated derivative = 5.000000e-01, relative error = 8.160603e-01;
+iteration# = 52 ,h = 4.440892e-16, calculated derivative = 5.000000e-01, relative error = 8.160603e-01;
+iteration# = 53 ,h = 2.220446e-16, calculated derivative = 5.000000e-01, relative error = 8.160603e-01;
+
+
+For sin(1) using center difference:
+iteration# = 1 ,h = 1.000000e+00, calculated derivative = 5.180694e-01, relative error = 8.094129e-01;
+iteration# = 2 ,h = 5.000000e-01, calculated derivative = 5.346917e-01, relative error = 8.032979e-01;
+iteration# = 3 ,h = 2.500000e-01, calculated derivative = 5.388964e-01, relative error = 8.017511e-01;
+iteration# = 4 ,h = 1.250000e-01, calculated derivative = 5.399506e-01, relative error = 8.013633e-01;
+iteration# = 5 ,h = 6.250000e-02, calculated derivative = 5.402144e-01, relative error = 8.012662e-01;
+iteration# = 6 ,h = 3.125000e-02, calculated derivative = 5.402803e-01, relative error = 8.012420e-01;
+iteration# = 7 ,h = 1.562500e-02, calculated derivative = 5.402968e-01, relative error = 8.012359e-01;
+iteration# = 8 ,h = 7.812500e-03, calculated derivative = 5.403009e-01, relative error = 8.012344e-01;
+iteration# = 9 ,h = 3.906250e-03, calculated derivative = 5.403020e-01, relative error = 8.012340e-01;
+iteration# = 10 ,h = 1.953125e-03, calculated derivative = 5.403022e-01, relative error = 8.012339e-01;
+iteration# = 11 ,h = 9.765625e-04, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 12 ,h = 4.882813e-04, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 13 ,h = 2.441406e-04, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 14 ,h = 1.220703e-04, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 15 ,h = 6.103516e-05, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 16 ,h = 3.051758e-05, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 17 ,h = 1.525879e-05, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 18 ,h = 7.629395e-06, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 19 ,h = 3.814697e-06, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 20 ,h = 1.907349e-06, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 21 ,h = 9.536743e-07, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 22 ,h = 4.768372e-07, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 23 ,h = 2.384186e-07, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 24 ,h = 1.192093e-07, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 25 ,h = 5.960464e-08, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 26 ,h = 2.980232e-08, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 27 ,h = 1.490116e-08, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 28 ,h = 7.450581e-09, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 29 ,h = 3.725290e-09, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 30 ,h = 1.862645e-09, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 31 ,h = 9.313226e-10, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 32 ,h = 4.656613e-10, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 33 ,h = 2.328306e-10, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 34 ,h = 1.164153e-10, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 35 ,h = 5.820766e-11, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 36 ,h = 2.910383e-11, calculated derivative = 5.403023e-01, relative error = 8.012339e-01;
+iteration# = 37 ,h = 1.455192e-11, calculated derivative = 5.402985e-01, relative error = 8.012353e-01;
+iteration# = 38 ,h = 7.275958e-12, calculated derivative = 5.403137e-01, relative error = 8.012297e-01;
+iteration# = 39 ,h = 3.637979e-12, calculated derivative = 5.402832e-01, relative error = 8.012409e-01;
+iteration# = 40 ,h = 1.818989e-12, calculated derivative = 5.402832e-01, relative error = 8.012409e-01;
+iteration# = 41 ,h = 9.094947e-13, calculated derivative = 5.402832e-01, relative error = 8.012409e-01;
+iteration# = 42 ,h = 4.547474e-13, calculated derivative = 5.402832e-01, relative error = 8.012409e-01;
+iteration# = 43 ,h = 2.273737e-13, calculated derivative = 5.400391e-01, relative error = 8.013307e-01;
+iteration# = 44 ,h = 1.136868e-13, calculated derivative = 5.410156e-01, relative error = 8.009715e-01;
+iteration# = 45 ,h = 5.684342e-14, calculated derivative = 5.390625e-01, relative error = 8.016900e-01;
+iteration# = 46 ,h = 2.842171e-14, calculated derivative = 5.390625e-01, relative error = 8.016900e-01;
+iteration# = 47 ,h = 1.421085e-14, calculated derivative = 5.390625e-01, relative error = 8.016900e-01;
+iteration# = 48 ,h = 7.105427e-15, calculated derivative = 5.312500e-01, relative error = 8.045640e-01;
+iteration# = 49 ,h = 3.552714e-15, calculated derivative = 5.625000e-01, relative error = 7.930678e-01;
+iteration# = 50 ,h = 1.776357e-15, calculated derivative = 5.000000e-01, relative error = 8.160603e-01;
+iteration# = 51 ,h = 8.881784e-16, calculated derivative = 5.000000e-01, relative error = 8.160603e-01;
+iteration# = 52 ,h = 4.440892e-16, calculated derivative = 5.000000e-01, relative error = 8.160603e-01;
+iteration# = 53 ,h = 2.220446e-16, calculated derivative = 5.000000e-01, relative error = 8.160603e-01;
+
+
+For sin(100) using forward method:
+iteration# = 1 ,h = 1.000000e+00, calculated derivative = 9.583914e-01, relative error = 1.000000e+00;
+iteration# = 2 ,h = 5.000000e-01, calculated derivative = 9.508113e-01, relative error = 1.000000e+00;
+iteration# = 3 ,h = 2.500000e-01, calculated derivative = 9.163311e-01, relative error = 1.000000e+00;
+iteration# = 4 ,h = 1.250000e-01, calculated derivative = 8.916817e-01, relative error = 1.000000e+00;
+iteration# = 5 ,h = 6.250000e-02, calculated derivative = 8.775764e-01, relative error = 1.000000e+00;
+iteration# = 6 ,h = 3.125000e-02, calculated derivative = 8.700898e-01, relative error = 1.000000e+00;
+iteration# = 7 ,h = 1.562500e-02, calculated derivative = 8.662397e-01, relative error = 1.000000e+00;
+iteration# = 8 ,h = 7.812500e-03, calculated derivative = 8.642881e-01, relative error = 1.000000e+00;
+iteration# = 9 ,h = 3.906250e-03, calculated derivative = 8.633057e-01, relative error = 1.000000e+00;
+iteration# = 10 ,h = 1.953125e-03, calculated derivative = 8.628128e-01, relative error = 1.000000e+00;
+iteration# = 11 ,h = 9.765625e-04, calculated derivative = 8.625660e-01, relative error = 1.000000e+00;
+iteration# = 12 ,h = 4.882813e-04, calculated derivative = 8.624425e-01, relative error = 1.000000e+00;
+iteration# = 13 ,h = 2.441406e-04, calculated derivative = 8.623807e-01, relative error = 1.000000e+00;
+iteration# = 14 ,h = 1.220703e-04, calculated derivative = 8.623498e-01, relative error = 1.000000e+00;
+iteration# = 15 ,h = 6.103516e-05, calculated derivative = 8.623343e-01, relative error = 1.000000e+00;
+iteration# = 16 ,h = 3.051758e-05, calculated derivative = 8.623266e-01, relative error = 1.000000e+00;
+iteration# = 17 ,h = 1.525879e-05, calculated derivative = 8.623227e-01, relative error = 1.000000e+00;
+iteration# = 18 ,h = 7.629395e-06, calculated derivative = 8.623208e-01, relative error = 1.000000e+00;
+iteration# = 19 ,h = 3.814697e-06, calculated derivative = 8.623198e-01, relative error = 1.000000e+00;
+iteration# = 20 ,h = 1.907349e-06, calculated derivative = 8.623194e-01, relative error = 1.000000e+00;
+iteration# = 21 ,h = 9.536743e-07, calculated derivative = 8.623191e-01, relative error = 1.000000e+00;
+iteration# = 22 ,h = 4.768372e-07, calculated derivative = 8.623190e-01, relative error = 1.000000e+00;
+iteration# = 23 ,h = 2.384186e-07, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 24 ,h = 1.192093e-07, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 25 ,h = 5.960464e-08, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 26 ,h = 2.980232e-08, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 27 ,h = 1.490116e-08, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 28 ,h = 7.450581e-09, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 29 ,h = 3.725290e-09, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 30 ,h = 1.862645e-09, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 31 ,h = 9.313226e-10, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 32 ,h = 4.656613e-10, calculated derivative = 8.623190e-01, relative error = 1.000000e+00;
+iteration# = 33 ,h = 2.328306e-10, calculated derivative = 8.623190e-01, relative error = 1.000000e+00;
+iteration# = 34 ,h = 1.164153e-10, calculated derivative = 8.623190e-01, relative error = 1.000000e+00;
+iteration# = 35 ,h = 5.820766e-11, calculated derivative = 8.623180e-01, relative error = 1.000000e+00;
+iteration# = 36 ,h = 2.910383e-11, calculated derivative = 8.623199e-01, relative error = 1.000000e+00;
+iteration# = 37 ,h = 1.455192e-11, calculated derivative = 8.623199e-01, relative error = 1.000000e+00;
+iteration# = 38 ,h = 7.275958e-12, calculated derivative = 8.623199e-01, relative error = 1.000000e+00;
+iteration# = 39 ,h = 3.637979e-12, calculated derivative = 8.623047e-01, relative error = 1.000000e+00;
+iteration# = 40 ,h = 1.818989e-12, calculated derivative = 8.623047e-01, relative error = 1.000000e+00;
+iteration# = 41 ,h = 9.094947e-13, calculated derivative = 8.623047e-01, relative error = 1.000000e+00;
+iteration# = 42 ,h = 4.547474e-13, calculated derivative = 8.623047e-01, relative error = 1.000000e+00;
+iteration# = 43 ,h = 2.273737e-13, calculated derivative = 8.623047e-01, relative error = 1.000000e+00;
+iteration# = 44 ,h = 1.136868e-13, calculated derivative = 8.623047e-01, relative error = 1.000000e+00;
+iteration# = 45 ,h = 5.684342e-14, calculated derivative = 8.632813e-01, relative error = 1.000000e+00;
+iteration# = 46 ,h = 2.842171e-14, calculated derivative = 8.632813e-01, relative error = 1.000000e+00;
+iteration# = 47 ,h = 1.421085e-14, calculated derivative = 8.593750e-01, relative error = 1.000000e+00;
+iteration# = 48 ,h = 7.105427e-15, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+iteration# = 49 ,h = 3.552714e-15, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+iteration# = 50 ,h = 1.776357e-15, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+iteration# = 51 ,h = 8.881784e-16, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+iteration# = 52 ,h = 4.440892e-16, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+iteration# = 53 ,h = 2.220446e-16, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+
+
+For sin(100) using center difference:
+iteration# = 1 ,h = 1.000000e+00, calculated derivative = 8.268354e-01, relative error = 1.000000e+00;
+iteration# = 2 ,h = 5.000000e-01, calculated derivative = 8.533644e-01, relative error = 1.000000e+00;
+iteration# = 3 ,h = 2.500000e-01, calculated derivative = 8.600750e-01, relative error = 1.000000e+00;
+iteration# = 4 ,h = 1.250000e-01, calculated derivative = 8.617576e-01, relative error = 1.000000e+00;
+iteration# = 5 ,h = 6.250000e-02, calculated derivative = 8.621785e-01, relative error = 1.000000e+00;
+iteration# = 6 ,h = 3.125000e-02, calculated derivative = 8.622838e-01, relative error = 1.000000e+00;
+iteration# = 7 ,h = 1.562500e-02, calculated derivative = 8.623101e-01, relative error = 1.000000e+00;
+iteration# = 8 ,h = 7.812500e-03, calculated derivative = 8.623167e-01, relative error = 1.000000e+00;
+iteration# = 9 ,h = 3.906250e-03, calculated derivative = 8.623183e-01, relative error = 1.000000e+00;
+iteration# = 10 ,h = 1.953125e-03, calculated derivative = 8.623187e-01, relative error = 1.000000e+00;
+iteration# = 11 ,h = 9.765625e-04, calculated derivative = 8.623188e-01, relative error = 1.000000e+00;
+iteration# = 12 ,h = 4.882813e-04, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 13 ,h = 2.441406e-04, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 14 ,h = 1.220703e-04, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 15 ,h = 6.103516e-05, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 16 ,h = 3.051758e-05, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 17 ,h = 1.525879e-05, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 18 ,h = 7.629395e-06, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 19 ,h = 3.814697e-06, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 20 ,h = 1.907349e-06, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 21 ,h = 9.536743e-07, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 22 ,h = 4.768372e-07, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 23 ,h = 2.384186e-07, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 24 ,h = 1.192093e-07, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 25 ,h = 5.960464e-08, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 26 ,h = 2.980232e-08, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 27 ,h = 1.490116e-08, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 28 ,h = 7.450581e-09, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 29 ,h = 3.725290e-09, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 30 ,h = 1.862645e-09, calculated derivative = 8.623189e-01, relative error = 1.000000e+00;
+iteration# = 31 ,h = 9.313226e-10, calculated derivative = 8.623190e-01, relative error = 1.000000e+00;
+iteration# = 32 ,h = 4.656613e-10, calculated derivative = 8.623190e-01, relative error = 1.000000e+00;
+iteration# = 33 ,h = 2.328306e-10, calculated derivative = 8.623190e-01, relative error = 1.000000e+00;
+iteration# = 34 ,h = 1.164153e-10, calculated derivative = 8.623180e-01, relative error = 1.000000e+00;
+iteration# = 35 ,h = 5.820766e-11, calculated derivative = 8.623199e-01, relative error = 1.000000e+00;
+iteration# = 36 ,h = 2.910383e-11, calculated derivative = 8.623199e-01, relative error = 1.000000e+00;
+iteration# = 37 ,h = 1.455192e-11, calculated derivative = 8.623199e-01, relative error = 1.000000e+00;
+iteration# = 38 ,h = 7.275958e-12, calculated derivative = 8.623047e-01, relative error = 1.000000e+00;
+iteration# = 39 ,h = 3.637979e-12, calculated derivative = 8.623047e-01, relative error = 1.000000e+00;
+iteration# = 40 ,h = 1.818989e-12, calculated derivative = 8.623047e-01, relative error = 1.000000e+00;
+iteration# = 41 ,h = 9.094947e-13, calculated derivative = 8.623047e-01, relative error = 1.000000e+00;
+iteration# = 42 ,h = 4.547474e-13, calculated derivative = 8.623047e-01, relative error = 1.000000e+00;
+iteration# = 43 ,h = 2.273737e-13, calculated derivative = 8.623047e-01, relative error = 1.000000e+00;
+iteration# = 44 ,h = 1.136868e-13, calculated derivative = 8.632813e-01, relative error = 1.000000e+00;
+iteration# = 45 ,h = 5.684342e-14, calculated derivative = 8.632813e-01, relative error = 1.000000e+00;
+iteration# = 46 ,h = 2.842171e-14, calculated derivative = 8.593750e-01, relative error = 1.000000e+00;
+iteration# = 47 ,h = 1.421085e-14, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+iteration# = 48 ,h = 7.105427e-15, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+iteration# = 49 ,h = 3.552714e-15, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+iteration# = 50 ,h = 1.776357e-15, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+iteration# = 51 ,h = 8.881784e-16, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+iteration# = 52 ,h = 4.440892e-16, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+iteration# = 53 ,h = 2.220446e-16, calculated derivative = 0.000000e+00, relative error = 1.000000e+00;
+</pre><img vspace="5" hspace="5" src="problem1_ab_01.png" alt=""> <img vspace="5" hspace="5" src="problem1_ab_02.png" alt=""> <img vspace="5" hspace="5" src="problem1_ab_03.png" alt=""> <img vspace="5" hspace="5" src="problem1_ab_04.png" alt=""> <img vspace="5" hspace="5" src="problem1_ab_05.png" alt=""> <img vspace="5" hspace="5" src="problem1_ab_06.png" alt=""> <img vspace="5" hspace="5" src="problem1_ab_07.png" alt=""> <img vspace="5" hspace="5" src="problem1_ab_08.png" alt=""> <img vspace="5" hspace="5" src="problem1_ab_09.png" alt=""> <img vspace="5" hspace="5" src="problem1_ab_10.png" alt=""> <img vspace="5" hspace="5" src="problem1_ab_11.png" alt=""> <img vspace="5" hspace="5" src="problem1_ab_12.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%%problem 1ab
+%Zibo Wang 2019
+
+clear
+close all
+clc
+
+%diff
+for l=[1,2]%fuction to be diffed
+    if l==1
+        j="exp";
+    elseif l==2
+        j="sin";
+    end
+    for m=[1,2,3]%x-value at which derivative to be evaled
+        if m==1
+            i=0.1;
+        elseif m==2
+            i=1;
+        elseif m==3
+            i=100;
+        end
+        for n=[1,2]%methoed used
+            if n==1
+                k="forward method";
+            elseif n==2
+                k="center difference";
+            end
+            fprintf('\n\nFor %s(%d) using %s:\n',j,i,k)
+            h=1;
+            nitr=1;
+            real_diff=exp(i);
+            while h>=eps
+                ss(nitr)=h;
+                calc_diff=diff_(j,i,h,n);%for help, use command "help diff_"; diff_.m is in the same zip file
+                error=abs(calc_diff-real_diff)/real_diff;
+                fprintf('iteration# = %d ,h = %e, calculated derivative = %e, relative error = %e;\n',nitr,h,calc_diff,error)
+                nitr=nitr+1;
+                h=h/2;
+                eval(['re',num2str(l),num2str(m),num2str(n),'(',num2str(nitr),')','=','error',';']);%save error
+            end
+        end
+    end
+end
+
+%print stepsize vs error
+cnt=1;
+for l=[1,2]
+    for m=[1,2,3]
+        for n=[1,2]
+            
+            figure(cnt)
+            eval(['loglog(ss,re',num2str(l),num2str(m),num2str(n),'(1:end-1));'])
+            
+            if l==1
+                j="exp";
+            elseif l==2
+                j="sin";
+            end
+            if m==1
+                i=0.1;
+            elseif m==2
+                i=1;
+            elseif m==3
+                i=100;
+            end
+            if n==1
+                k="forward method";
+            elseif n==2
+                k="center difference";
+            end
+            
+            title(num2str(cnt)+") "+j+"("+num2str(i)+") using "+k+";")
+            xlabel("log(h)");ylabel("log(\epsilon)");grid;
+            cnt=cnt+1;
+        end
+    end
+end
+##### SOURCE END #####
+--></body></html>

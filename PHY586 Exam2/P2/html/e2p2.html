@@ -1,0 +1,281 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>e2p2</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-11-25"><meta name="DC.source" content="e2p2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Problem 2(i)</a></li><li><a href="#2">Problem 2(ii)</a></li><li><a href="#4">Problem 2(iii)</a></li><li><a href="#6">Problem 2(iv)</a></li></ul></div><h2 id="1">Problem 2(i)</h2><p>Find and plot the Fourier coefficientsfor this signal.</p><pre class="codeinput">clear;clc;
+
+dt=0.01;<span class="comment">%time interval between two samples</span>
+T=1;<span class="comment">%suppose period = 1s</span>
+n=10;<span class="comment">%using 10 periods</span>
+
+t = (0:dt:(T*n-dt));
+yt = (square(2*pi.*t./T, 50)+1)./2;
+
+[an, bn, fn] = DFT_(yt, t);
+<span class="comment">%[an, bn, fn] = fourier_a_b_coefs(yt, t);</span>
+
+subplot(2,1,1);
+plot(fn,an);title(<span class="string">'cosine coef.'</span>)
+xlabel(<span class="string">'Freq. (Hz)'</span>);ylabel(<span class="string">'Amplitude'</span>)
+subplot(2,1,2);
+plot(fn,bn);title(<span class="string">'sine coef.'</span>)
+xlabel(<span class="string">'Freq. (Hz)'</span>);ylabel(<span class="string">'Amplitude'</span>)
+</pre><img vspace="5" hspace="5" src="e2p2_01.png" alt=""> <h2 id="2">Problem 2(ii)</h2><p>Express how these coefficients change when length of time is changed.</p><pre class="codeinput">clear;clc;
+
+dt=0.01;
+T=1;
+
+<span class="keyword">for</span> i=1:6
+    n=10*i;
+
+    t = (0:dt:(T*n-dt));
+    yt = (square(2*pi.*t./T, 50)+1)./2;
+
+    [an, bn, fn] = DFT_(yt, t);
+    <span class="comment">%[an, bn, fn] = fourier_a_b_coefs(yt, t);</span>
+
+    figure()
+    str=strcat(<span class="string">'n = '</span>, num2str(n));
+    subplot(2,1,1);
+    plot(fn,an);title([<span class="string">'cosine coef.'</span>,str]);
+    xlabel(<span class="string">'Freq. (Hz)'</span>);ylabel(<span class="string">'Amplitude'</span>);
+    subplot(2,1,2);
+    plot(fn,bn);title([<span class="string">'sine coef.'</span>,str]);
+    xlabel(<span class="string">'Freq. (Hz)'</span>);ylabel(<span class="string">'Amplitude'</span>);
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="e2p2_02.png" alt=""> <img vspace="5" hspace="5" src="e2p2_03.png" alt=""> <img vspace="5" hspace="5" src="e2p2_04.png" alt=""> <img vspace="5" hspace="5" src="e2p2_05.png" alt=""> <img vspace="5" hspace="5" src="e2p2_06.png" alt=""> <img vspace="5" hspace="5" src="e2p2_07.png" alt=""> <p>From plots, the relative size of coeficients do not changes. This makes sense, as including more period of the signal does not change the signal, and the Fourier coeficients should not change.</p><h2 id="4">Problem 2(iii)</h2><p>Compute the time signal by only using Yn.</p><pre class="codeinput">clear;clc;
+
+dt=0.01;
+T=1;
+n=10;
+
+t = (0:dt:(T*n-dt));
+yt = (square(2*pi.*t./T, 50)+1)./2;
+
+subplot(2,1,1);plot(t,yt);
+[an, bn, fn] = DFT_(yt, t);
+<span class="comment">%[an, bn, fn] = fourier_a_b_coefs(yt, t);</span>
+[ifyt] = iDFT_(an, bn);
+<span class="comment">%[ifyt, t] = inv_fourier_yt(an, bn, fn);</span>
+hold <span class="string">on</span>;plot(t,real(ifyt));hold <span class="string">off</span>;
+title(<span class="string">'Original signal and signal reconstructed by IDFT'</span>);
+xlabel(<span class="string">'time (s)'</span>);ylabel(<span class="string">'Amplitude'</span>);
+legend(<span class="string">'Original'</span>,<span class="string">'Reconstructed'</span>);
+
+subplot(2,1,2);plot(t,(yt-real(ifyt)));
+title(<span class="string">'Difference between two signal'</span>);
+xlabel(<span class="string">'time (s)'</span>);ylabel(<span class="string">'Amplitude'</span>);
+</pre><img vspace="5" hspace="5" src="e2p2_08.png" alt=""> <p>The reconstructed signal is essentially the same as original signal, as two signal overlap in first plot, and has difference that is essentially zero shown in second plot.</p><h2 id="6">Problem 2(iv)</h2><p>If the original time signal did not include a full period...</p><pre class="codeinput">clear;clc;
+
+dt=0.01;
+T=1;
+n=1;
+
+t = (0:dt:(T*n-dt));
+yt = (square(2*pi.*t./T, 50)+1)./2;
+
+figure()
+plot(t,yt);
+[an, bn, fn] = DFT_(yt(1:75), t(1:75));
+<span class="comment">%[an, bn, fn] = fourier_a_b_coefs(yt(1:75), t(1:75));</span>
+[ifyt] = iDFT_(an, bn);
+<span class="comment">%[ifyt, t] = inv_fourier_yt(an, bn, fn);</span>
+hold <span class="string">on</span>;plot(t(1:75),real(ifyt));hold <span class="string">off</span>;
+title(<span class="string">'Original signal and signal reconstructed by IDFT'</span>);
+xlabel(<span class="string">'time (s)'</span>);ylabel(<span class="string">'Amplitude'</span>);
+legend(<span class="string">'Original'</span>,<span class="string">'Reconstructed'</span>);
+
+figure();
+subplot(2,1,1);
+plot(fn,an);title(<span class="string">'cosine coef.'</span>);
+xlabel(<span class="string">'Freq. (Hz)'</span>);ylabel(<span class="string">'Amplitude'</span>);
+subplot(2,1,2);
+plot(fn,bn);title(<span class="string">'sine coef.'</span>);
+xlabel(<span class="string">'Freq. (Hz)'</span>);ylabel(<span class="string">'Amplitude'</span>);
+</pre><img vspace="5" hspace="5" src="e2p2_09.png" alt=""> <img vspace="5" hspace="5" src="e2p2_10.png" alt=""> <p>If the singal does not include a full period, the reconstructed signal only reflect the part of the signal provided.</p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Problem 2(i)
+% Find and plot the Fourier coefficientsfor this signal.
+
+clear;clc;
+
+dt=0.01;%time interval between two samples
+T=1;%suppose period = 1s
+n=10;%using 10 periods
+
+t = (0:dt:(T*n-dt));
+yt = (square(2*pi.*t./T, 50)+1)./2;
+
+[an, bn, fn] = DFT_(yt, t);
+%[an, bn, fn] = fourier_a_b_coefs(yt, t);
+
+subplot(2,1,1);
+plot(fn,an);title('cosine coef.')
+xlabel('Freq. (Hz)');ylabel('Amplitude')
+subplot(2,1,2);
+plot(fn,bn);title('sine coef.')
+xlabel('Freq. (Hz)');ylabel('Amplitude')
+
+%% Problem 2(ii)
+% Express how these coefficients change when length of time is changed.
+
+clear;clc;
+
+dt=0.01;
+T=1;
+
+for i=1:6
+    n=10*i;
+
+    t = (0:dt:(T*n-dt));
+    yt = (square(2*pi.*t./T, 50)+1)./2;
+
+    [an, bn, fn] = DFT_(yt, t);
+    %[an, bn, fn] = fourier_a_b_coefs(yt, t);
+
+    figure()
+    str=strcat('n = ', num2str(n));
+    subplot(2,1,1);
+    plot(fn,an);title(['cosine coef.',str]);
+    xlabel('Freq. (Hz)');ylabel('Amplitude');
+    subplot(2,1,2);
+    plot(fn,bn);title(['sine coef.',str]);
+    xlabel('Freq. (Hz)');ylabel('Amplitude');
+end
+
+%%
+% From plots, the relative size of coeficients do not changes. This makes
+% sense, as including more period of the signal does not change the signal,
+% and the Fourier coeficients should not change.
+
+%% Problem 2(iii)
+% Compute the time signal by only using Yn.
+
+clear;clc;
+
+dt=0.01;
+T=1;
+n=10;
+
+t = (0:dt:(T*n-dt));
+yt = (square(2*pi.*t./T, 50)+1)./2;
+
+subplot(2,1,1);plot(t,yt);
+[an, bn, fn] = DFT_(yt, t);
+%[an, bn, fn] = fourier_a_b_coefs(yt, t);
+[ifyt] = iDFT_(an, bn);
+%[ifyt, t] = inv_fourier_yt(an, bn, fn);
+hold on;plot(t,real(ifyt));hold off;
+title('Original signal and signal reconstructed by IDFT');
+xlabel('time (s)');ylabel('Amplitude');
+legend('Original','Reconstructed');
+
+subplot(2,1,2);plot(t,(yt-real(ifyt)));
+title('Difference between two signal');
+xlabel('time (s)');ylabel('Amplitude');
+
+%%
+% The reconstructed signal is essentially the same as original signal, as
+% two signal overlap in first plot, and has difference that is essentially
+% zero shown in second plot.
+
+%% Problem 2(iv)
+% If the original time signal did not include a full period...
+
+clear;clc;
+
+dt=0.01;
+T=1;
+n=1;
+
+t = (0:dt:(T*n-dt));
+yt = (square(2*pi.*t./T, 50)+1)./2;
+
+figure()
+plot(t,yt);
+[an, bn, fn] = DFT_(yt(1:75), t(1:75));
+%[an, bn, fn] = fourier_a_b_coefs(yt(1:75), t(1:75));
+[ifyt] = iDFT_(an, bn);
+%[ifyt, t] = inv_fourier_yt(an, bn, fn);
+hold on;plot(t(1:75),real(ifyt));hold off;
+title('Original signal and signal reconstructed by IDFT');
+xlabel('time (s)');ylabel('Amplitude');
+legend('Original','Reconstructed');
+
+figure();
+subplot(2,1,1);
+plot(fn,an);title('cosine coef.');
+xlabel('Freq. (Hz)');ylabel('Amplitude');
+subplot(2,1,2);
+plot(fn,bn);title('sine coef.');
+xlabel('Freq. (Hz)');ylabel('Amplitude');
+
+%%
+% If the singal does not include a full period, the reconstructed signal
+% only reflect the part of the signal provided.
+##### SOURCE END #####
+--></body></html>

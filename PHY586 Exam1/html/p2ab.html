@@ -1,0 +1,165 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Problem 2(a,b)</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-10-15"><meta name="DC.source" content="p2ab.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Problem 2(a,b)</h1><!--introduction--><p><img vspace="5" hspace="5" src="p2.jpg" alt=""> </p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">a)</a></li><li><a href="#2">b)</a></li><li><a href="#3">c)</a></li></ul></div><h2 id="1">a)</h2><div><ol><li>Forces on M1 must be balanced (f1 and f2 in (b)).</li></ol></div><div><ol><li>Forces on M2 must be balanced (f3 and f4 in (b)).</li></ol></div><div><ol><li>Summation of horizontal component of L1, L2, and L3 must be equal to L (f5 in (b)).</li></ol></div><div><ol><li>Summation of vertical component of L1, L2, and L3 must be zero (f6 in (b))</li></ol></div><pre class="codeinput">clear
+clc
+
+fprintf([<span class="string">'a) Constains:\n'</span>,<span class="keyword">...</span>
+    <span class="string">'1.Forces on M1 must be balanced (f1 and f2 in (b)).\n'</span>,<span class="keyword">...</span>
+    <span class="string">'2.Forces on M2 must be balanced (f3 and f4 in (b)).\n'</span>,<span class="keyword">...</span>
+    <span class="string">'3.Summation of horizontal component of L1, L2, and L3 must be equal to L.(f5 in (b))\n'</span>,<span class="keyword">...</span>
+    <span class="string">'4.Summation of vertical component of L1, L2, and L3 must be zero(f6 in (b)).\n'</span>])
+</pre><pre class="codeoutput">a) Constains:
+1.Forces on M1 must be balanced (f1 and f2 in (b)).
+2.Forces on M2 must be balanced (f3 and f4 in (b)).
+3.Summation of horizontal component of L1, L2, and L3 must be equal to L.(f5 in (b))
+4.Summation of vertical component of L1, L2, and L3 must be zero(f6 in (b)).
+</pre><h2 id="2">b)</h2><div><ul><li>Balacing horizontal components of forces on M1</li></ul></div><p><img src="p2ab_eq08283181252140107328.png" alt="$$f_1=T_1\mathrm{sin}(\theta_1)-T_2\mathrm{sin}(\theta_2)-m_1g=0.$$"></p><div><ul><li>Balcing vertical components of forces on M1</li></ul></div><p><img src="p2ab_eq06491795013654568034.png" alt="$$f_2=T_1\mathrm{cos}(\theta_1)-T_2\mathrm{cos}(\theta_2)=0.$$"></p><div><ul><li>Balacing horizontal components of forces on M2</li></ul></div><p><img src="p2ab_eq00778656164406140377.png" alt="$$f_3=T_2\mathrm{sin}(\theta_2)+T_3\mathrm{sin}(\theta_3)-m_2g=0.$$"></p><div><ul><li>Balcing vertical components of forces on M2</li></ul></div><p><img src="p2ab_eq08307832075729345920.png" alt="$$f_4=T_2\mathrm{cos}(\theta_2)-T_3\mathrm{cos}(\theta_3)=0.$$"></p><div><ul><li>Horizontal length restriction</li></ul></div><p><img src="p2ab_eq16721242874033850609.png" alt="$$f_5=L_1\mathrm{cos}(\theta_)+L_2\mathrm{cos}(\theta_2)+L_3\mathrm{cos}(\theta_3)-L=0.$$"></p><div><ul><li>Vertical length restriction</li></ul></div><p><img src="p2ab_eq11664332952403259659.png" alt="$$f_6=L_1\mathrm{sin}(\theta_)+L_2\mathrm{sin}(\theta_2)-L_3\mathrm{sin}(\theta_3)=0.$$"></p><p>Since we are treating sines and cosines of angles as variables, we have extra restrictions</p><p><img src="p2ab_eq09353846074515522361.png" alt="$$f_j=\mathrm{sin}^2(\theta_i)+\mathrm{cos}^2(\theta_i)-1=0, \mathrm{for\ } j=7,8,9 \mathrm{\ and\ } i=1,2,3.$$"></p><pre class="codeinput">fprintf([<span class="string">'\nb)\nf1=T1*sin(theta_1-T2*sin(theta_2)-m1g\n'</span>,<span class="keyword">...</span>
+    <span class="string">'f2=T1*cos(theta1)-T2*cos(theta2)=0\n'</span>,<span class="keyword">...</span>
+    <span class="string">'f3=T2*sin(theta2)+T3*sin(theta3)-m2g=0\n'</span>,<span class="keyword">...</span>
+    <span class="string">'f4=T2*cos(theta2)-T3*cos(theta3)=0\n'</span>,<span class="keyword">...</span>
+    <span class="string">'f5=L1*cos(theta)+L2*cos(theta2)+L3*cos(theta3)-L=0\n'</span>,<span class="keyword">...</span>
+    <span class="string">'f6=L1*sin(theta)+L2*sin(theta2)-L3*sin(theta3)=0\n'</span>,<span class="keyword">...</span>
+    <span class="string">'fj=sin^2(thetai)+cos^2(thetai)-1=0, for j=7,8,9 and i=1,2,3.\n'</span>])
+</pre><pre class="codeoutput">
+b)
+f1=T1*sin(theta_1-T2*sin(theta_2)-m1g
+f2=T1*cos(theta1)-T2*cos(theta2)=0
+f3=T2*sin(theta2)+T3*sin(theta3)-m2g=0
+f4=T2*cos(theta2)-T3*cos(theta3)=0
+f5=L1*cos(theta)+L2*cos(theta2)+L3*cos(theta3)-L=0
+f6=L1*sin(theta)+L2*sin(theta2)-L3*sin(theta3)=0
+fj=sin^2(thetai)+cos^2(thetai)-1=0, for j=7,8,9 and i=1,2,3.
+</pre><h2 id="3">c)</h2><p>See p1c.m.</p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Problem 2(a,b)
+%
+% <<p2.jpg>>
+
+%% a)
+% # Forces on M1 must be balanced (f1 and f2 in (b)).
+%
+% # Forces on M2 must be balanced (f3 and f4 in (b)).
+%
+% # Summation of horizontal component of L1, L2, and L3 must be equal to L
+% (f5 in (b)).
+%
+% # Summation of vertical component of L1, L2, and L3 must be zero
+% (f6 in (b))
+
+clear
+clc
+
+fprintf(['a) Constains:\n',...
+    '1.Forces on M1 must be balanced (f1 and f2 in (b)).\n',...
+    '2.Forces on M2 must be balanced (f3 and f4 in (b)).\n',...
+    '3.Summation of horizontal component of L1, L2, and L3 must be equal to L.(f5 in (b))\n',...
+    '4.Summation of vertical component of L1, L2, and L3 must be zero(f6 in (b)).\n'])
+
+%% b)
+% * Balacing horizontal components of forces on M1
+%
+% $$f_1=T_1\mathrm{sin}(\theta_1)-T_2\mathrm{sin}(\theta_2)-m_1g=0.$$
+%
+% * Balcing vertical components of forces on M1
+%
+% $$f_2=T_1\mathrm{cos}(\theta_1)-T_2\mathrm{cos}(\theta_2)=0.$$
+%
+% * Balacing horizontal components of forces on M2
+%
+% $$f_3=T_2\mathrm{sin}(\theta_2)+T_3\mathrm{sin}(\theta_3)-m_2g=0.$$
+%
+% * Balcing vertical components of forces on M2
+%
+% $$f_4=T_2\mathrm{cos}(\theta_2)-T_3\mathrm{cos}(\theta_3)=0.$$
+%
+% * Horizontal length restriction
+%
+% $$f_5=L_1\mathrm{cos}(\theta_)+L_2\mathrm{cos}(\theta_2)+L_3\mathrm{cos}(\theta_3)-L=0.$$
+%
+% * Vertical length restriction
+%
+% $$f_6=L_1\mathrm{sin}(\theta_)+L_2\mathrm{sin}(\theta_2)-L_3\mathrm{sin}(\theta_3)=0.$$
+%
+% Since we are treating sines and cosines of angles as variables, we have
+% extra restrictions
+%
+% $$f_j=\mathrm{sin}^2(\theta_i)+\mathrm{cos}^2(\theta_i)-1=0, \mathrm{for\ } j=7,8,9 \mathrm{\ and\ } i=1,2,3.$$
+fprintf(['\nb)\nf1=T1*sin(theta_1-T2*sin(theta_2)-m1g\n',...
+    'f2=T1*cos(theta1)-T2*cos(theta2)=0\n',...
+    'f3=T2*sin(theta2)+T3*sin(theta3)-m2g=0\n',...
+    'f4=T2*cos(theta2)-T3*cos(theta3)=0\n',...
+    'f5=L1*cos(theta)+L2*cos(theta2)+L3*cos(theta3)-L=0\n',...
+    'f6=L1*sin(theta)+L2*sin(theta2)-L3*sin(theta3)=0\n',...
+    'fj=sin^2(thetai)+cos^2(thetai)-1=0, for j=7,8,9 and i=1,2,3.\n'])
+
+%% c)
+%
+% See p1c.m. 
+##### SOURCE END #####
+--></body></html>

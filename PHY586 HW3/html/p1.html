@@ -1,0 +1,193 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Problem 1</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-11-09"><meta name="DC.source" content="p1.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Problem 1</h1><!--introduction--><p>Simulating orbits for Neptune and Uranus.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">(a)</a></li><li><a href="#2">(b)</a></li></ul></div><h2 id="1">(a)</h2><p>Orbits for Neptune and Uranus where interactions between each other are ignored.</p><pre class="codeinput">clear
+clc
+
+<span class="comment">% Data and initial condition:</span>
+SM = 1.98847e30; <span class="comment">% solar mass</span>
+mass = [4.366244e-5*SM, 5.151389e-5*SM, SM]; <span class="comment">% Masses of Uranus, Neptune, and Sun</span>
+AU = 1.495978707e11; <span class="comment">% astronomical unit</span>
+d = [19.1914*AU, 30.0611*AU,0]; <span class="comment">% Distance to the sun</span>
+y = 365.2422222*24*3600; <span class="comment">% a year in sec</span>
+T = [84.0110*y, 164.7901*y, 1]; <span class="comment">% periods</span>
+v = (2*pi.*d)./T; <span class="comment">% velocities</span>
+theta = [205.64*pi/180, 288.38*pi/180, 0]; <span class="comment">% initial angular positions</span>
+
+<span class="comment">% Calculate &amp; plot orbits</span>
+tvec = (0:0.05:500).*y;
+
+[xtu,ytu,vxtu,vytu] = compute_orbits_RK4_nbody([cos(theta(1))*d(1),0],<span class="keyword">...</span>
+    [sin(theta(1))*d(1),0], [sin(theta(1))*v(1),0],<span class="keyword">...</span>
+    [-cos(theta(1))*v(1),0], [mass(1),mass(3)], tvec);
+[xtn,ytn,vxtn,vytn] = compute_orbits_RK4_nbody([cos(theta(2))*d(2),0],<span class="keyword">...</span>
+    [sin(theta(2))*d(2),0], [sin(theta(2))*v(2),0],<span class="keyword">...</span>
+    [-cos(theta(2))*v(2),0], [mass(2),mass(3)], tvec);
+
+figure(1);
+plot(xtu(:,1)/AU,ytu(:,1)/AU,xtn(:,1)/AU,ytn(:,1)/AU);
+legend(<span class="string">'Uranus'</span>,<span class="string">'Neptune'</span>);
+title(<span class="string">'Without pertubation'</span>);
+xlabel(<span class="string">'x(AU)'</span>);ylabel(<span class="string">'y(AU)'</span>);
+</pre><img vspace="5" hspace="5" src="p1_01.png" alt=""> <h2 id="2">(b)</h2><pre>The force of gravity between each other are included.</pre><pre class="codeinput">[xt3,yt3,vxt3,vyt3] = compute_orbits_RK4_nbody([cos(theta(1))*d(1),cos(theta(2))*d(2),0],<span class="keyword">...</span>
+    [sin(theta(1))*d(1),sin(theta(2))*d(2),0],<span class="keyword">...</span>
+    [sin(theta(1))*v(1),sin(theta(2))*v(2),0],<span class="keyword">...</span>
+    [-cos(theta(1))*v(1),-cos(theta(2))*v(2),0], [mass(1),mass(2),mass(3)], tvec);
+
+figure(2);
+plot(xt3(:,1)/AU,yt3(:,1)/AU,xt3(:,2)/AU,yt3(:,2)/AU);
+legend(<span class="string">'Uranus'</span>,<span class="string">'Neptune'</span>);
+title(<span class="string">'With pertubation'</span>);
+xlabel(<span class="string">'x (AU)'</span>);ylabel(<span class="string">'y (AU)'</span>);
+</pre><img vspace="5" hspace="5" src="p1_02.png" alt=""> <p>Analysis</p><pre class="codeinput">figure(3);
+plot(tvec/y,(xtu(:,1)-xt3(:,1))/AU,tvec/y,(ytu(:,1)-yt3(:,1))/AU);
+legend(<span class="string">'x-component of position pertubation'</span>,<span class="string">'y-component of position pertubation'</span>);
+xlabel(<span class="string">'time (year)'</span>);ylabel(<span class="string">'position pertubation (AU)'</span>);
+
+figure(4);
+plot(tvec/y,(vxtu(:,1)-vxt3(:,1)),tvec/y,(vytu(:,1)-vyt3(:,1)));
+legend(<span class="string">'x-component of velocity pertubation(m/s)'</span>,<span class="string">'y-component of velocity pertubation(m/s)'</span>);
+xlabel(<span class="string">'time (year)'</span>);ylabel(<span class="string">'velocity pertubation (m/s)'</span>);
+</pre><img vspace="5" hspace="5" src="p1_03.png" alt=""> <img vspace="5" hspace="5" src="p1_04.png" alt=""> <p>From the point of view of the Uranus, when it is away from the Neptune, it experiences less acceleration than when it is closer to Neptune. Also, as it approaches Neptune, it experiences positive acceleration, while when it leaves the Neptune, the acceleration is negative. So there is a periodic change in acceleration due to the Neptune. That causes the difference in position and velocity calculated in two cases. In addition, since the time period I used is 500 years, which is approximately 6 orbital period of the Uranus, which means the Uranus also passing through the Neptune for 6 times. That explains 6 peaks and troughs in the plots.</p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Problem 1
+% Simulating orbits for Neptune and Uranus.
+
+%% (a)
+% Orbits for Neptune and Uranus where interactions between each other are
+% ignored.
+
+clear
+clc
+
+% Data and initial condition:
+SM = 1.98847e30; % solar mass
+mass = [4.366244e-5*SM, 5.151389e-5*SM, SM]; % Masses of Uranus, Neptune, and Sun
+AU = 1.495978707e11; % astronomical unit
+d = [19.1914*AU, 30.0611*AU,0]; % Distance to the sun
+y = 365.2422222*24*3600; % a year in sec
+T = [84.0110*y, 164.7901*y, 1]; % periods
+v = (2*pi.*d)./T; % velocities
+theta = [205.64*pi/180, 288.38*pi/180, 0]; % initial angular positions
+
+% Calculate & plot orbits
+tvec = (0:0.05:500).*y;
+
+[xtu,ytu,vxtu,vytu] = compute_orbits_RK4_nbody([cos(theta(1))*d(1),0],...
+    [sin(theta(1))*d(1),0], [sin(theta(1))*v(1),0],...
+    [-cos(theta(1))*v(1),0], [mass(1),mass(3)], tvec);
+[xtn,ytn,vxtn,vytn] = compute_orbits_RK4_nbody([cos(theta(2))*d(2),0],...
+    [sin(theta(2))*d(2),0], [sin(theta(2))*v(2),0],...
+    [-cos(theta(2))*v(2),0], [mass(2),mass(3)], tvec);
+
+figure(1);
+plot(xtu(:,1)/AU,ytu(:,1)/AU,xtn(:,1)/AU,ytn(:,1)/AU);
+legend('Uranus','Neptune');
+title('Without pertubation');
+xlabel('x(AU)');ylabel('y(AU)');
+
+%% (b)
+%  The force of gravity between each other are included.
+
+[xt3,yt3,vxt3,vyt3] = compute_orbits_RK4_nbody([cos(theta(1))*d(1),cos(theta(2))*d(2),0],...
+    [sin(theta(1))*d(1),sin(theta(2))*d(2),0],...
+    [sin(theta(1))*v(1),sin(theta(2))*v(2),0],...
+    [-cos(theta(1))*v(1),-cos(theta(2))*v(2),0], [mass(1),mass(2),mass(3)], tvec);
+
+figure(2);
+plot(xt3(:,1)/AU,yt3(:,1)/AU,xt3(:,2)/AU,yt3(:,2)/AU);
+legend('Uranus','Neptune');
+title('With pertubation');
+xlabel('x (AU)');ylabel('y (AU)');
+
+%%
+% Analysis
+
+figure(3);
+plot(tvec/y,(xtu(:,1)-xt3(:,1))/AU,tvec/y,(ytu(:,1)-yt3(:,1))/AU);
+legend('x-component of position pertubation','y-component of position pertubation');
+xlabel('time (year)');ylabel('position pertubation (AU)');
+
+figure(4);
+plot(tvec/y,(vxtu(:,1)-vxt3(:,1)),tvec/y,(vytu(:,1)-vyt3(:,1)));
+legend('x-component of velocity pertubation(m/s)','y-component of velocity pertubation(m/s)');
+xlabel('time (year)');ylabel('velocity pertubation (m/s)');
+
+%%
+% From the point of view of the Uranus, when it is away from the Neptune,
+% it experiences less acceleration than when it is closer to Neptune. Also,
+% as it approaches Neptune, it experiences positive acceleration, while
+% when it leaves the Neptune, the acceleration is negative. So there is a
+% periodic change in acceleration due to the Neptune. That causes the
+% difference in position and velocity calculated in two cases. In addition,
+% since the time period I used is 500 years, which is approximately 6
+% orbital period of the Uranus, which means the Uranus also passing through
+% the Neptune for 6 times. That explains 6 peaks and troughs in the plots.
+
+##### SOURCE END #####
+--></body></html>

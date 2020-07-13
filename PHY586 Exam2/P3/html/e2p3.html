@@ -1,0 +1,281 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>e2p3</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-11-25"><meta name="DC.source" content="e2p3.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Problem 3(a)</a></li><li><a href="#2">Problem 3(b)</a></li><li><a href="#4">Problem 3(c)</a></li><li><a href="#6">Problem 3(d)</a></li></ul></div><h2 id="1">Problem 3(a)</h2><p>Solve for the angular displacement and angular velocity using RK4.</p><pre class="codeinput">clear;clc;
+
+theta = 20;<span class="comment">%suppose initial angular displacement is 20 degree</span>
+tvec = (0:0.01:10);
+
+[thetat,omegat] = nonlinearpendulum(theta,tvec);<span class="comment">%use help ... for detail</span>
+subplot(2,1,1);
+plot(tvec,thetat);
+xlabel(<span class="string">'Angular displacement (rad)'</span>);ylabel(<span class="string">'time (sec)'</span>);
+subplot(2,1,2);
+plot(tvec,omegat);
+xlabel(<span class="string">'Angular velocity (rad/sec)'</span>);ylabel(<span class="string">'time (sec)'</span>);
+</pre><img vspace="5" hspace="5" src="e2p3_01.png" alt=""> <h2 id="2">Problem 3(b)</h2><p>Show conservation of energy</p><pre class="codeinput">clear;clc;
+
+g=9.81; <span class="comment">%gravity a</span>
+L=1; <span class="comment">%assume length of pendulum is 1m</span>
+m=1;<span class="comment">%suppose m=1kg</span>
+tvec = (0:0.01:10);
+
+figure();hold <span class="string">on</span>;
+<span class="keyword">for</span>  i=1:10
+    theta = 10*i;
+    [thetat,omegat] = nonlinearpendulum(theta,tvec);
+    E(i,:)=m.*((L.*omegat).^2)/2+m.*g.*L.*(1-cos(thetat));
+    plot(tvec,E(i,:))
+<span class="keyword">end</span>
+hold <span class="string">off</span>
+title(<span class="string">'Energy vs time'</span>);xlabel(<span class="string">'time (sec)'</span>);ylabel(<span class="string">'Energy (J)'</span>);
+legend(<span class="string">'\theta=10'</span>,<span class="string">'\theta=20'</span>,<span class="string">'\theta=30'</span>,<span class="string">'\theta=40'</span>,<span class="string">'\theta=50'</span>,<span class="keyword">...</span>
+    <span class="string">'\theta=60'</span>,<span class="string">'\theta=70'</span>,<span class="string">'\theta=80'</span>,<span class="string">'\theta=90'</span>,<span class="string">'\theta=100'</span>);
+</pre><img vspace="5" hspace="5" src="e2p3_02.png" alt=""> <p>From the plot, it is clear to see that energy is conserved.</p><h2 id="4">Problem 3(c)</h2><p>Estimate the period using DFT, and compare.</p><pre class="codeinput">clear;clc;
+
+g=9.81; <span class="comment">%gravity a</span>
+L=1; <span class="comment">%assume length of pendulum is 1m</span>
+m=1;<span class="comment">%suppose m=1kg</span>
+tvec = (0:0.01:10);
+
+<span class="keyword">for</span>  i=1:6
+    figure();
+    theta = 10*i;
+
+    [thetat(i,:),~] = nonlinearpendulum(theta,tvec);
+
+    [an, bn, fn] = DFT_(thetat(i,:), tvec);
+    <span class="comment">%using help ... for detail.</span>
+
+    str=strcat(<span class="string">'\theta = '</span>,num2str(theta),char(176));
+
+    subplot(1,2,1);hold <span class="string">on</span>;
+    plot(fn(1:20),an(1:20));
+    plot(fn(1:20),bn(1:20));
+    xlabel(<span class="string">'Freq. (Hz)'</span>);ylabel(<span class="string">'Amplitude'</span>);legend(<span class="string">'cos'</span>,<span class="string">'sin'</span>);
+    title([<span class="string">'Sine and cosine coef.'</span>,str]);
+    grid <span class="string">on</span>;hold <span class="string">off</span>;
+
+    [ma,Ia]=max(an);
+    [mb,Ib]=max(bn);
+
+    subplot(1,2,2);hold <span class="string">on</span>;
+    plot(tvec,thetat(i,:));
+    plot(tvec,(sqrt(2.*pi)./length(an)).*(ma.*cos(2.*pi.*fn(Ia).*tvec)+mb.*sin(2.*pi.*fn(Ib).*tvec)));
+    xlabel(<span class="string">'Time (sec)'</span>);ylabel(<span class="string">'Angular displacement (rad)'</span>);
+    title(<span class="string">'Original displacement vs. estimated'</span>)
+    legend(<span class="string">'RK4 result'</span>,<span class="string">'Estimation using DFT'</span>);
+    hold <span class="string">off</span>;
+
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="e2p3_03.png" alt=""> <img vspace="5" hspace="5" src="e2p3_04.png" alt=""> <img vspace="5" hspace="5" src="e2p3_05.png" alt=""> <img vspace="5" hspace="5" src="e2p3_06.png" alt=""> <img vspace="5" hspace="5" src="e2p3_07.png" alt=""> <img vspace="5" hspace="5" src="e2p3_08.png" alt=""> <p>I use the frequency where maximum value of an and bn is obtained as estimated freqency, which happened to be sqrt(L/g). However, since the pendulum is nonlinear, this does not fit very well with actual freqency for some initial angle. Also, because not all coefficients are used, the reconstructed curves have smaller amplitude.</p><h2 id="6">Problem 3(d)</h2><p>Prove as energy increases, period also increases.</p><pre class="codeinput">clear;clc;
+
+g=9.81; <span class="comment">%gravity a</span>
+L=1; <span class="comment">%assume length of pendulum is 1m</span>
+m=1;<span class="comment">%suppose m=1kg</span>
+tvec = (0:0.01:4);
+
+str=[];
+figure();
+<span class="keyword">for</span>  i=1:17
+    hold <span class="string">on</span>
+    theta = 10*i;
+    [thetat,~] = nonlinearpendulum(theta,tvec);
+    thetat=thetat/max(thetat);
+    plot(tvec,thetat,<span class="string">'Color'</span>,([1,1,1]-i*[5,5,5]/100));
+    tempstr=strcat(num2str(i*10),char(176));
+    str=[str,{tempstr}];
+<span class="keyword">end</span>
+
+xlabel(<span class="string">'Time (sec)'</span>);ylabel(<span class="string">'Normalized angular displacement'</span>);
+title(<span class="string">'Angular displacement as initial angle increases'</span>)
+legend(str);
+hold <span class="string">off</span>
+</pre><img vspace="5" hspace="5" src="e2p3_09.png" alt=""> <p>From the plot, the time taken for pendulum to do a complete cycle increase as the initial angle increases (energy also increase).</p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Problem 3(a)
+% Solve for the angular displacement and angular velocity using RK4.
+
+clear;clc;
+
+theta = 20;%suppose initial angular displacement is 20 degree
+tvec = (0:0.01:10);
+
+[thetat,omegat] = nonlinearpendulum(theta,tvec);%use help ... for detail
+subplot(2,1,1);
+plot(tvec,thetat);
+xlabel('Angular displacement (rad)');ylabel('time (sec)');
+subplot(2,1,2);
+plot(tvec,omegat);
+xlabel('Angular velocity (rad/sec)');ylabel('time (sec)');
+
+%% Problem 3(b)
+% Show conservation of energy
+
+clear;clc;
+
+g=9.81; %gravity a
+L=1; %assume length of pendulum is 1m
+m=1;%suppose m=1kg
+tvec = (0:0.01:10);
+
+figure();hold on;
+for  i=1:10
+    theta = 10*i;
+    [thetat,omegat] = nonlinearpendulum(theta,tvec);
+    E(i,:)=m.*((L.*omegat).^2)/2+m.*g.*L.*(1-cos(thetat));
+    plot(tvec,E(i,:))
+end
+hold off
+title('Energy vs time');xlabel('time (sec)');ylabel('Energy (J)');
+legend('\theta=10','\theta=20','\theta=30','\theta=40','\theta=50',...
+    '\theta=60','\theta=70','\theta=80','\theta=90','\theta=100');
+
+%%
+% From the plot, it is clear to see that energy is conserved.
+
+%% Problem 3(c)
+% Estimate the period using DFT, and compare.
+
+clear;clc;
+
+g=9.81; %gravity a
+L=1; %assume length of pendulum is 1m
+m=1;%suppose m=1kg
+tvec = (0:0.01:10);
+
+for  i=1:6
+    figure();
+    theta = 10*i;
+
+    [thetat(i,:),~] = nonlinearpendulum(theta,tvec);
+    
+    [an, bn, fn] = DFT_(thetat(i,:), tvec);
+    %using help ... for detail.
+    
+    str=strcat('\theta = ',num2str(theta),char(176));
+    
+    subplot(1,2,1);hold on;
+    plot(fn(1:20),an(1:20));
+    plot(fn(1:20),bn(1:20));
+    xlabel('Freq. (Hz)');ylabel('Amplitude');legend('cos','sin');
+    title(['Sine and cosine coef.',str]);
+    grid on;hold off;
+    
+    [ma,Ia]=max(an);
+    [mb,Ib]=max(bn);
+    
+    subplot(1,2,2);hold on;
+    plot(tvec,thetat(i,:));
+    plot(tvec,(sqrt(2.*pi)./length(an)).*(ma.*cos(2.*pi.*fn(Ia).*tvec)+mb.*sin(2.*pi.*fn(Ib).*tvec)));
+    xlabel('Time (sec)');ylabel('Angular displacement (rad)');
+    title('Original displacement vs. estimated')
+    legend('RK4 result','Estimation using DFT');
+    hold off;
+    
+end
+
+%% 
+% I use the frequency where maximum value of an and bn is obtained as
+% estimated freqency, which happened to be sqrt(L/g). However, since the
+% pendulum is nonlinear, this does not fit very well with actual freqency
+% for some initial angle. Also, because not all coefficients are used, the
+% reconstructed curves have smaller amplitude.
+
+%% Problem 3(d)
+% Prove as energy increases, period also increases.
+
+clear;clc;
+
+g=9.81; %gravity a
+L=1; %assume length of pendulum is 1m
+m=1;%suppose m=1kg
+tvec = (0:0.01:4);
+
+str=[];
+figure();
+for  i=1:17
+    hold on
+    theta = 10*i;
+    [thetat,~] = nonlinearpendulum(theta,tvec);
+    thetat=thetat/max(thetat);
+    plot(tvec,thetat,'Color',([1,1,1]-i*[5,5,5]/100));
+    tempstr=strcat(num2str(i*10),char(176));
+    str=[str,{tempstr}];
+end
+
+xlabel('Time (sec)');ylabel('Normalized angular displacement');
+title('Angular displacement as initial angle increases')
+legend(str);
+hold off
+
+%%
+% From the plot, the time taken for pendulum to do a complete cycle
+% increase as the initial angle increases (energy also increase).
+##### SOURCE END #####
+--></body></html>
